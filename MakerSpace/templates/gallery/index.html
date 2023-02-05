@@ -1,0 +1,530 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- style 開始 -->
+<style>
+  .mt-10{
+    margin-top: 10px;
+  }
+
+  .mb-10{
+    margin-bottom: 10px;
+  }
+
+  .w-300h-500{
+    width: 300px;
+    height: 500px;
+  }
+
+  .right{
+    float: right;
+  }
+
+  .btn-box {
+    overflow: hidden;
+  }
+
+  .btn-box > button {
+    margin: 1%;
+    border-radius: 20px;
+    width: 110px;
+    padding: 6px 12px;    
+  }
+
+  .box{
+    padding: 0;
+    width: 999px;
+    height: 100px; 
+    margin: auto;
+    overflow:hidden;
+  }
+  
+  .list{
+      margin: 0;
+  }
+
+  .photo,
+  .photo>img{
+      width: 150px;
+      height: 100px;
+      font-size: 3.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: left;
+      margin-right:10px;
+  }
+
+</style>
+
+<!-- style 結束 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 畫面 開始 -->
+  <div class="container mt-10">
+    <div class="row ">
+      <div class="col-4">
+        <div class="col-12 accordion" id="accordionFlushExample">
+
+
+
+          <!-- 進階 accordion -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                進階功能
+              </button>
+            </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="container">
+                <div class="row">
+                  
+                 {% comment %} action='generate/'  {% endcomment %}
+                    <form id="generate" method="POST" class="form-group needs-validation" novalidate>
+
+                      {% csrf_token %}
+     
+                        <div class="row mt-10">
+                          <!-- 高度 -->
+                            <label class="col-md-2 col-form-label">高度</label>
+                            <div class="col-md-10">
+                              <select id="height" name="height" class="form-control" >
+                                <option disabled selected value="512">請選擇高度</option>
+                                {% for size in height %}
+                                  <option value="{{ size }}">{{size}}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="invalid-feedback">請選擇高度</div>
+                            </div>
+                        </div>
+                    
+                      <div class="row mt-10">
+                          <!-- 寬度 -->
+                            <label class="col-md-2 col-form-label">寬度</label>
+                            <div class="col-md-10">
+                              <select id="width" name="width" class="form-control" >
+                                <option disabled selected value="512">請選擇寬度</option>
+                                {% for size in width %}
+                                  <option value="{{ size }}">{{size}}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="invalid-feedback">請選擇寬度</div>
+                            </div>
+                        </div>
+
+                      <div class="row mt-10">
+                          <label class="col-md-2 col-form-label">steps</label>
+                          <div class="col-md-10">
+                            <input id="steps" type="number" min="5" max="500" name="steps"  class="form-control" value="{{pages.last.steps}}"/>
+                            <div class="invalid-feedback">請輸入steps</div>
+                          </div>
+                      </div><!-- column -->
+
+                      <div class="row mt-10">
+                          <label class="col-md-2 col-form-label">scale</label>
+                          <div class="col-md-10">
+                            <input id="scale" type="number" min="1" max="20" name="scale" step="0.5" value="17.5" class="form-control" />
+                            <div class="invalid-feedback">請輸入scale</div>
+                          </div>
+                      </div><!-- column -->
+
+                      <div class="row mt-10">
+                          <label class="col-md-2 col-form-label">seed</label>
+                          <div class="col-md-10">
+                            <input id="seed" type="number" name="seed" min="1" step="1" value="{{pages.last.page_number}}" class="form-control"/>
+                          <div  class="invalid-feedback">請輸入seed</div>
+                        </div>
+                      </div><!-- column -->
+                    </div> <!-- container -->
+                  </div> <!-- row -->
+              </div><!-- card body -->
+          </div><!-- accordion -->
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="col-12 mt-10">
+          <!-- prompt -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                關鍵字資料庫
+              </button>
+            </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample"ㄋ>
+                <div class="container">
+                  <div class="row">
+                        <div class="col-md-12">
+                            <!-- prompt 測試中 功能未完整 -->
+                            <div id="promptbase" class="btn-box pre-scrollable" style="overflow-x: hidden; overflow-y:auto; width:380px; height:185px;" >
+                                {% for category in categories %}
+                                  <button class="btn btn-outline-dark radius" type="button" onclick="showKeyword(this)" value={{category.id}}>{{category.name}}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-10">
+                          <textarea id="promptArea" name="prompt" class="form-control" >{{pages.last.prompt}}</textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-block text-center mt-10 mb-10">
+                          <button  class="btn btn-outline-success" type="submit">產生圖片</button>
+                          <button class="btn btn-outline-danger" type="reset">清除表單</button>
+                        </div>
+
+                      </form>
+                    </div> <!-- row -->
+                </div> <!-- container -->
+              </div><!-- card body -->
+          </div><!-- card -->
+        </div>
+      </div><!-- col-4 -->
+    
+      <div class="col-8">
+        {% comment %} <div class="col-12">
+          <div id="imgContainer"></div>
+        </div>
+        <div class="col-12 mt-10">
+            <textarea name="description" class="form-control" rows="3" cols="33" ></textarea>
+        </div> {% endcomment %}
+        <div class="col-12">
+          白板
+          <div class="row">
+            <div class="col-md-6" id="imgContainer">
+              <img src="https://fakeimg.pl/400x500/?text=400X500&font=lobster">
+            </div>
+            <div class="col-md-6" >
+              <p> <textarea id="description" name="description" class="form-control" rows="20.5" cols="12" ></textarea></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- row -->
+  </div><!-- container -->
+
+
+  
+<!-- 頁數選擇 -->
+  <div class="row mt-10">
+    <div class="col-12">
+      <div id="myCarousel" class="carousel carousel-dark slide">
+ 
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        
+        <div class="box">
+          <div class="carousel-inner list">
+            
+              <div class="carousel-item active">
+                {% comment %} 從繪本資料庫抓取圖片 {% endcomment %}
+                {% for page in pages %}
+                {% if forloop.counter < 7 %}
+                  <div id="page{{page.page_number}}"class="photo" type="button" onclick="getPageImform(this)" value="{{page.page_number}}">{{page.page_number}}</div>
+                {% if forloop.last %}
+                  <div id="add" class="photo" type="button" onclick="createPage(this)">+</div>  
+                {% endif %}
+                {% endif %}  
+                {% empty %}
+                  <div class="photo" type="button" onclick="createPage(this)">+</div>  
+                {% endfor %}
+                {% comment %} onclick="建立function顯示圖像及文字" {% endcomment %}
+              </div>
+            
+            <div class="carousel-item">
+              {% for page in pages %}
+              {% if forloop.counter > 6 and forloop.counter < 11 or forloop.counter > 10 and forloop.counter < 20%}
+              <div class="photo" type="button" onclick="self.location.href='#'">{{page.page_number}}</div>
+              {% if forloop.last %}
+              <div class="photo" type="button" onclick="self.location.href='#'">+</div> 
+              {% endif %}  
+              {% endif %}  
+              {% empty %}
+                <div class="photo" type="button" onclick="self.location.href='#'">+</div> 
+              {% endfor %}                  
+            </div>
+          </div>
+        </div>
+
+
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+    </div><!-- col-12 -->
+  </div><!-- row -->
+<!-- 畫面 結束 -->
+
+
+
+
+
+
+
+<!-- js 開始 -->
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--createPage-->
+<script>
+function createPage(){
+$(document).ready(function() {
+$("#add").on("click", function(e) {
+  console.log("{{pages.first.book}}");
+  $.ajax({
+        url: "insert/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        data: {
+          id:"{{pages.first.book}}"
+        }, // 將表單資料用打包起來送出去
+        dataType:'json',
+        success: function(response) {
+          window.location.assign(window.location.href); //自動跳轉頁面
+        },
+    });
+});
+});
+
+
+}
+
+</script>
+
+<!-- generate js -->
+<!--表單id="generate":主要在form加id即可觸發ajax事件-->
+<!-- 需要新增功能1:表單寄出成功時，圖片框架自動先顯示產生圖片中(選轉動畫)-->
+<!-- 需要新增功能2:當成功完成才顯示圖片，否則顯示無法產生圖片請重新產圖-->
+<!-- 需要新增功能3:當成功完成才顯示圖片，順便將資料先打包到localstroge-->
+<!-- 需要新增功能3:資料先打包到localstroge後，下面選單將重新出現資料-->
+
+<script>
+$(document).ready(function() {
+  $.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+$("#generate").on("submit", function(e) {
+  e.preventDefault();
+  $.ajax({
+        url: "generate/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        dataType: "html", //資料格式
+        data: $("form").serialize(), // 將表單資料用打包起來送出去
+        success: function(response) {
+                let image = response;
+                $("#imgContainer").html(image);
+        },
+    });
+    return false; // 阻止瀏覽器跳轉到"generate/"，因為已經用 ajax 送出去了
+});
+});
+</script>
+
+{% comment %} $.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+$("form").on("sumbit", function(e) {
+  e.preventDefault();
+  $.ajax({
+        url: "generate/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        dataType: "html", //資料格式
+        data: $("form").serialize(), // 將表單資料用打包起來送出去
+        success: function(response) {
+                let image = response;
+                $("#imgContainer").html(image);
+        },
+    });
+    return false; // 阻止瀏覽器跳轉到 send.php，因為已經用 ajax 送出去了
+}); {% endcomment %}
+
+
+<!-- btn js -->
+  <script type="text/javascript">
+    let cnt = 0;
+    let prompt = [];
+    function changeColor(target) {
+      
+      let keyword = "";
+      let index = prompt.indexOf(target.value);
+      if (target.id==0 && index == -1) {
+        target.id = 1;
+        prompt.push(target.value);
+        keyword = target.value;
+        target.style.backgroundColor = "yellow";
+      } else if (target.id == 1 ){
+        target.id = 2;
+        keyword = "(" + prompt[index] + ")";
+        prompt[index] = keyword;
+        target.value = keyword;
+        target.style.backgroundColor = "orange";
+      } else if (target.id == 2) {
+        target.id = 3;
+        keyword = "(" + prompt[index] + ")";
+        target.value = keyword;
+        prompt[index] = keyword;
+        target.style.backgroundColor = "red";
+      } else if (target.id == 3) {
+        target.style.backgroundColor = "";
+        prompt.splice(index, 1);
+        target.value = target.value.replace("((","").replace("))","");
+        target.id = 0;
+      }
+
+      let promptArea = document.querySelector("#promptArea");
+      promptArea.innerText = prompt.join(',');
+     
+      // console.log(prompt+target.id+index);
+    }
+
+
+  function clear(items) {
+    let len = items.children.length;
+    for (let i = 0; i < len; i++) {
+      items.children[0].remove();
+    }
+    return items
+  }
+
+  function reloadPrompt(items,prompt){
+    let promptbase = items.children;
+    //console.log(prompt);
+    //console.log(items.children);
+    for(let i = 0 ; i <prompt.length;i++){ // prompt資料庫
+      let text = prompt[i];
+      console.log(prompt[i])
+      for(let j = 0 ; j < promptbase.length; j++ ){ // promptbase
+        
+        text = text.replace('(','').replace(')','').replace('(','').replace(')','')
+         if(text == promptbase[j].innerHTML){
+          if(prompt[i].includes("((")){
+            promptbase[j].id = 3;
+            promptbase[j].style.backgroundColor = "red";
+          }else if(prompt[i].includes("(")){
+            promptbase[j].id = 2;
+            promptbase[j].style.backgroundColor = "orange";
+          }else{
+            promptbase[j].id = 1;
+            promptbase[j].style.backgroundColor = "yellow";
+          }
+          
+          promptbase[j].value = prompt[i];
+        }
+      }
+
+    }
+  }
+
+
+  function showKeyword(id) {
+    let pb = document.querySelector("#promptbase");
+    
+    
+    //清空目前種類
+    clear(pb);   
+    //判斷清單類別給予內容
+    {% for prompt in promptBase %}
+//      console.log(id.value == "{{prompt.category_id}}");
+      if(id.value == "{{prompt.category_id}}"){
+        document.querySelector("#promptbase").innerHTML += '<button class="btn btn-outline-dark radius" type="button" id=0  onclick="changeColor(this)" value={{prompt.keyword}}>{{prompt.keyword}}</button>';
+      }
+    {%endfor%}
+    reloadPrompt(pb,prompt);
+    
+    
+    
+    //返回種類清單
+    let Return = document.createElement("button");
+    Return.classList.add("btn");
+    Return.classList.add("btn-outline-dark");
+    Return.classList.add("radius");
+    Return.innerText = "返回"; 
+    Return.addEventListener("click", (e) => {
+      document.querySelector("#promptbase").innerHTML = '{% for category in categories %}<button class="btn btn-outline-dark radius" type="button" onclick="showKeyword(this)" value={{category.id}}>{{category.name}}</button>{% endfor %}'
+  });
+  
+  pb.appendChild(Return);
+  
+  }
+ {% comment %} <!--getPageImform()-->
+<!--執行前，先比對原頁有無跟資料庫內資訊不同，如果圖片跟文字不同則更新資訊，否則不用-->
+<!--原頁儲存完畢後，將所有資訊更換為資料庫內該頁的資訊(包含參數那些)--> {% endcomment %}
+  function getPageImform(target){
+    let page = target.id.replace("page","");
+    showImform(page);
+  }
+  
+  function showImform(num){
+    let height = document.querySelector("#height");
+    let width = document.querySelector("#width");
+    let steps = document.querySelector("#steps");
+    let scale= document.querySelector("#scale");
+    let seed = document.querySelector("#seed");
+    let promptArea = document.querySelector("#PromptArea")
+    let description = document.querySelector("#description");
+    let imgContainer = document.querySelector("#imgContainer");
+    
+    {% for page in pages %}
+    //      console.log(id.value == "{{prompt.category_id}}");
+          if(num == "{{page.page_number}}"){
+            height.value = "{{page.height}}";
+            width.value = "{{page.width}}";
+            steps.value = "{{page.steps}}";
+            scale.value = "{{page.scale}}";
+            seed.value = "{{page.seed}}";
+            description.innerText = "{{page.description}}";
+            prompt = "{{page.prompt}}";
+            prompt = prompt.split(",");
+            promptArea.innerText = "{{page.prompt}}"
+            {% comment %} 缺image {% endcomment %}
+          }
+    {%endfor%}
+  
+  }
+  
+  </script> 
+    <!-- 頁數選擇 js -->
+  <script>
+      let myCarousel = document.querySelector('#myCarousel')
+      let carousel = new bootstrap.Carousel(myCarousel, {
+        wrap: false
+      })
+  </script>
+<!-- js 結束 -->
+{% endblock %}
+<!-- 日記 -->
+  <!-- 20230120 -->
+    <!-- form需要重新設計，輸出文字一組form，進階與prompt一組 -->
+    <!-- 文字尚無預覽功能，相關技術搜尋中，空間暫時留在圖片右側 -->
+    <!-- 底下的頁面新增功能，目前想到虛擬新增方法，但版面思考中，
+      　 相關技術：http://mirlab.org/jang/books/javascript/dynamicSelect.asp?title=7-3%20%B0%CA%BAA%A4U%A9%D4%A6%A1%BF%EF%B3%E6 -->
+    <!-- form驗證功能 OK -->
