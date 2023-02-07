@@ -35,13 +35,13 @@ def pagesToDictionary(pages):
 
     return output
 
-
 def insert(request):
     bookID = Book.objects.get(bookID=request.POST.get('id'))
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     new_page = sum(1 for i in pages)
     seed = Image.objects.get(book=bookID,page_number=sum(1 for i in pages)-1).seeds
     Image.objects.create(page_number=new_page,book=bookID,seeds=seed,steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!")
+
     pages = list(pages.values())
     return JsonResponse({'pages':pages})
 
@@ -92,7 +92,8 @@ def generate(request):
         height = int(request.POST['height'])
         width =  int(request.POST['width'])
         print(prompt,scale,seed,steps,sep='\n')
-    
+
+    pages = request.POST['page']
     device = "cuda" if torch.cuda.is_available() else 'cpu'
     model_id = "stabilityai/stable-diffusion-2"
     auth_token = "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"
@@ -114,7 +115,6 @@ def generate(request):
     image = pipe(prompt,  height=height, width=width, guidance_scale=scale,
                  num_inference_steps=steps, generator=generator).images[0]
 
-    Picturebookid = 'pb20230202_1'
 
     #取得目前繪本id資料夾，若沒有則建立並依據編號存到該路徑中
     # image.save(f'media/image/tmp.png')

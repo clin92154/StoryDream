@@ -99,7 +99,9 @@
                     <form id="generate" method="POST" class="form-group needs-validation" novalidate>
 
                       {% csrf_token %}
-     
+                        <label  class="col-md-2 col-form-label">第
+                          <input id="page"  type="number" name="page" class="form-control" value="0" readonly="readonly"/>
+                        頁</label>
                         <div class="row mt-10">
                           <!-- 高度 -->
                             <label class="col-md-2 col-form-label">高度</label>
@@ -482,8 +484,9 @@ $("form").on("sumbit", function(e) {
     let page = target.id.replace("page","");
     showImform(page);
   }
-  
   function showImform(num){
+    
+    let page = document.querySelector("#page");
     let height = document.querySelector("#height");
     let width = document.querySelector("#width");
     let steps = document.querySelector("#steps");
@@ -496,6 +499,7 @@ $("form").on("sumbit", function(e) {
     {% for page in pages %}
     //      console.log(id.value == "{{prompt.category_id}}");
           if(num == "{{page.page_number}}"){
+            page.value = "{{page.page_number}}";
             height.value = "{{page.height}}";
             width.value = "{{page.width}}";
             steps.value = "{{page.steps}}";
