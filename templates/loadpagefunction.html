@@ -1,0 +1,48 @@
+<!--重新整理-->
+<script></script>
+<!--添加頁面功能-->
+<script>
+  document.getElementById("add").addEventListener("click", function () {
+    $(document).ready(function () {
+      $.ajax({
+        url: "insert/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        data: {
+          id: "{{pages.first.book}}",
+        }, // 將表單資料用打包起來送出去
+        dataType: "html",
+        //若成功-> localStroge
+        success: function (response) {
+          let loadpages = response;
+          $("#loadpages").html(loadpages);
+          let num = "{{pages.last.page_number}}";
+          num = Number(num) + 1;
+          showpage(num);
+        },
+      });
+    });
+  });
+</script>
+<!--顯示所選頁面資訊-->
+<script>
+  function showpage(num) {
+    $(document).ready(function () {
+      $.ajaxSetup({
+        data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
+      });
+      $.ajax({
+        url: "showpage/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        data: {
+          id: "{{pages.first.book}}",
+          page: num,
+        }, // 將表單資料用打包起來送出去
+        dataType: "html",
+        //若成功-> localStroge
+        success: function (response) {
+          $("#main").html(response);
+        },
+      });
+    });
+  }
+</script>

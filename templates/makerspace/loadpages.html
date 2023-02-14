@@ -1,0 +1,23 @@
+<!-- 頁數選擇 -->
+<div class="container mt-10 of-y">
+  <div class="row">
+    <ul class="ul-of">
+      {% for page in pages %}
+      <li
+        id="page{{page.page_number}}"
+        class="photo"
+        type="button"
+        onclick="showpage({{page.page_number}})"
+        value="{{page.page_number}}"
+      >
+        <img
+          style='background-image:url("data:image/png;base64,{{page.image}}")'
+        />
+      </li>
+      <label>{{page.page_number}}</label>
+      {% endfor %}
+      <li id="add" class="photo text-center" type="button">+</li>
+    </ul>
+  </div>
+</div>
+{% include 'loadpagefunction.html' %}

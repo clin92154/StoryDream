@@ -1,0 +1,32 @@
+$(document).ready(function () {
+  $.ajaxSetup({
+    data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
+  });
+  $("#generate").on("submit", function (e) {
+    e.preventDefault();
+    $("#page-image").html("<div>開始生圖</div>");
+    $.ajax({
+      url: "generate/", // 要傳送的頁面
+      method: "POST", // 使用 POST 方法傳送請求
+      dataType: "json", //資料格式
+      data: $("form").serialize(), // 將表單資料用打包起來送出去
+      beforeSend: function () {
+        // setting a timeout
+        $("#page-image").html(
+          '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div role="status"><div>開始圖中... 請稍後</div>'
+        );
+      },
+      success: function (response) {
+        let image = response.image_str;
+        $("#page-image").css(
+          "background-image",
+          `url("data:image/png;base64,${image}")`
+        );
+      },
+      error: function () {
+        $("#page-image").html(`出現錯誤，請重新生圖`);
+      },
+    });
+    return false; // 阻止瀏覽器跳轉到"generate/"，因為已經用 ajax 送出去了
+  });
+});

@@ -1,0 +1,96 @@
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.w-300h-500 {
+    width: 300px;
+    height: 500px;
+}
+
+.right {
+    float: right;
+}
+
+.btn-box {
+    overflow: hidden;
+}
+
+.btn-box>button {
+    margin: 1%;
+    border-radius: 20px;
+    width: 110px;
+    padding: 6px 12px;
+}
+
+.box {
+    padding: 0;
+    width: 999px;
+    height: 100px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.list {
+    margin: 0;
+}
+
+.of-y {
+    overflow-y: hidden;
+}
+
+.ul-of {
+    white-space: nowrap;
+    overflow: visible;
+    width: 100px;
+}
+
+.photo,
+.photo>img {
+    background-color: rgb(238, 235, 235);
+    width: 150px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 3.5rem;
+    display: inline-block;
+}
+
+
+/* 圖像區 */
+
+#page-cover {
+    /* background-color: white; */
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 30px;
+    display: flex;
+}
+
+#page-text {
+    width: 30%;
+    height: 100%;
+    background-color: rgb(68, 120, 103);
+}
+
+#page-image {
+    width: 70%;
+    height: 100%;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#page-text>#text-area {
+    padding: 15%;
+    box-sizing: border-box;
+    border: none;
+    resize: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(137, 136, 128);
+}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% block content %}
+<div id="main">{% include 'makerspace/main.html'%}</div>
+<div id="loadpages" class="container mt-10 of-y">
+  {% include 'makerspace/loadpages.html' %}
+</div>
+<!-- 頁數選擇 -->
+<script>
+  let init_page = document.getElementById("page");
+  init_page.value = "0";
+</script>
+<script type="text/javascript">
+    let prompt = [];
+    function changeColor(target) {
+
+      let keyword = "";
+      let index = prompt.indexOf(target.value);
+      if (target.id==0 && index == -1) {
+        target.id = 1;
+        prompt.push(target.value);
+        keyword = target.value;
+        target.style.backgroundColor = "yellow";
+      } else if (target.id == 1 ){
+        target.id = 2;
+        keyword = "(" + prompt[index] + ")";
+        prompt[index] = keyword;
+        target.value = keyword;
+        target.style.backgroundColor = "orange";
+      } else if (target.id == 2) {
+        target.id = 3;
+        keyword = "(" + prompt[index] + ")";
+        target.value = keyword;
+        prompt[index] = keyword;
+        target.style.backgroundColor = "red";
+      } else if (target.id == 3) {
+        target.style.backgroundColor = "";
+        prompt.splice(index, 1);
+        target.value = target.value.replace("((","").replace("))","");
+        target.id = 0;
+      }
+
+      let promptArea = document.querySelector("#promptArea");
+      promptArea.innerText = prompt.join(',');
+
+      // console.log(prompt+target.id+index);
+    }
+
+
+  function clear(items) {
+    let len = items.children.length;
+    for (let i = 0; i < len; i++) {
+      items.children[0].remove();
+    }
+    return items
+  }
+
+  function reloadPrompt(items,prompt){
+    let promptbase = items.children;
+    //console.log(prompt);
+    //console.log(items.children);
+    for(let i = 0 ; i <prompt.length;i++){ // prompt資料庫
+      let text = prompt[i];
+      console.log(prompt[i])
+      for(let j = 0 ; j < promptbase.length; j++ ){ // promptbase
+
+        text = text.replace('(','').replace(')','').replace('(','').replace(')','')
+         if(text == promptbase[j].innerHTML){
+          if(prompt[i].includes("((")){
+            promptbase[j].id = 3;
+            promptbase[j].style.backgroundColor = "red";
+          }else if(prompt[i].includes("(")){
+            promptbase[j].id = 2;
+            promptbase[j].style.backgroundColor = "orange";
+          }else{
+            promptbase[j].id = 1;
+            promptbase[j].style.backgroundColor = "yellow";
+          }
+
+          promptbase[j].value = prompt[i];
+        }
+      }
+
+    }
+  }
+
+
+  function showKeyword(id) {
+    let pb = document.querySelector("#promptbase");
+
+
+    //清空目前種類
+    clear(pb);
+    //判斷清單類別給予內容
+    {% for prompt in promptBase %}
+  //      console.log(id.value == "{{prompt.category_id}}");
+      if(id.value == "{{prompt.category_id}}"){
+        document.querySelector("#promptbase").innerHTML += '<button class="btn btn-outline-dark radius" type="button" id=0  onclick="changeColor(this)" value={{prompt.keyword}}>{{prompt.keyword}}</button>';
+      }
+    {%endfor%}
+    reloadPrompt(pb,prompt);
+
+    //返回種類清單
+    let Return = document.createElement("button");
+    Return.classList.add("btn");
+    Return.classList.add("btn-outline-dark");
+    Return.classList.add("radius");
+    Return.innerText = "返回";
+    Return.addEventListener("click", (e) => {
+      document.querySelector("#promptbase").innerHTML = '{% for category in categories %}<button class="btn btn-outline-dark radius" type="button" onclick="showKeyword(this)" value={{category.id}}>{{category.name}}</button>{% endfor %}'
+  });
+
+  pb.appendChild(Return);
+
+  }
+</script>
+{% endblock %}

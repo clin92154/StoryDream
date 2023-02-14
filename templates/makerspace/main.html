@@ -1,0 +1,29 @@
+<div class="container mt-10">
+  <div class="row">
+    <div class="col-4">
+      <form
+        id="generate"
+        method="POST"
+        class="form-group needs-validation"
+        novalidate
+      >
+        {% csrf_token %}
+        <label class="col-md-2"
+          >第
+          <input
+            id="page"
+            type="number"
+            name="page"
+            class="form-control"
+            value="{{pages.page_number}}"
+            readonly="readonly"
+          />
+          頁</label
+        >
+        {% include 'makerspace/left.html'%}
+      </form>
+    </div>
+    <div class="col-8">{% include 'makerspace/right.html'%}</div>
+    {% include 'generate.html'%}
+  </div>
+</div>

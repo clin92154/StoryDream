@@ -1,0 +1,176 @@
+<div class="col-12 accordion" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseOne"
+        aria-expanded="false"
+        aria-controls="flush-collapseOne"
+      >
+        進階功能
+      </button>
+    </h2>
+    <div
+      id="flush-collapseOne"
+      class="accordion-collapse collapse"
+      aria-labelledby="flush-headingOne"
+      data-bs-parent="#accordionFlushExample"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="row mt-10">
+            <!-- 高度 -->
+            <label class="col-md-2 col-form-label">高度</label>
+            <div class="col-md-10">
+              <select id="height" name="height" class="form-control">
+                <option disabled selected value="{{pages.height}}">
+                  請選擇高度
+                </option>
+                {% for size in height %}
+                <option value="{{ size }}">{{size}}</option>
+                {% endfor %}
+              </select>
+              <div class="invalid-feedback">請選擇高度</div>
+            </div>
+          </div>
+
+          <div class="row mt-10">
+            <!-- 寬度 -->
+            <label class="col-md-2 col-form-label">寬度</label>
+            <div class="col-md-10">
+              <select id="width" name="width" class="form-control">
+                <option disabled selected value="{{pages.width}}">
+                  請選擇寬度
+                </option>
+                {% for size in width %}
+                <option value="{{ size }}">{{size}}</option>
+                {% endfor %}
+              </select>
+              <div class="invalid-feedback">請選擇寬度</div>
+            </div>
+          </div>
+
+          <div class="row mt-10">
+            <label class="col-md-2 col-form-label">steps</label>
+            <div class="col-md-10">
+              <input
+                id="steps"
+                type="number"
+                min="5"
+                max="500"
+                name="steps"
+                class="form-control"
+                value="{{pages.steps}}"
+              />
+              <div class="invalid-feedback">請輸入steps</div>
+            </div>
+          </div>
+          <!-- column -->
+
+          <div class="row mt-10">
+            <label class="col-md-2 col-form-label">scale</label>
+            <div class="col-md-10">
+              <input
+                id="scale"
+                type="number"
+                min="1"
+                max="20"
+                name="scale"
+                step="0.5"
+                value="{{pages.scale}}"
+                class="form-control"
+              />
+              <div class="invalid-feedback">請輸入scale</div>
+            </div>
+          </div>
+          <!-- column -->
+
+          <div class="row mt-10">
+            <label class="col-md-2 col-form-label">seed</label>
+            <div class="col-md-10">
+              <input
+                id="seed"
+                type="number"
+                name="seed"
+                min="1"
+                step="1"
+                value="{{pages.page_number}}"
+                class="form-control"
+              />
+              <div class="invalid-feedback">請輸入seed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 accordion" id="accordionFlushExample">
+  <!-- prompt -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseTwo"
+        aria-expanded="false"
+        aria-controls="flush-collapseTwo"
+      >
+        關鍵字資料庫
+      </button>
+    </h2>
+    <div
+      id="flush-collapseTwo"
+      class="accordion-collapse collapse show"
+      aria-labelledby="flush-headingTwo"
+      data-bs-parent="#accordionFlushExample"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- prompt 測試中 功能未完整 -->
+            <div
+              id="promptbase"
+              class="btn-box pre-scrollable"
+              style="
+                overflow-x: hidden;
+                overflow-y: auto;
+                width: 380px;
+                height: 185px;
+              "
+            >
+              {% for category in categories %}
+              <button
+                class="btn btn-outline-dark radius"
+                type="button"
+                onclick="showKeyword(this)"
+                value="{{category.id}}"
+              >
+                {{category.name}}
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </div>
+    <!-- card body -->
+  </div>
+  <!-- card -->
+
+  <div class="col-md-12 mt-10">
+    <textarea id="promptArea" name="prompt" class="form-control">
+{{pages.prompt}}</textarea
+    >
+  </div>
+
+  <div class="d-grid gap-2 d-md-block text-center mt-10 mb-10">
+    <button class="btn btn-outline-success" type="submit">產生圖片</button>
+    <button class="btn btn-outline-danger" type="reset">清除表單</button>
+  </div>
+</div>
