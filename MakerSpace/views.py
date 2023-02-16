@@ -25,6 +25,10 @@ SIZE = [size for size in range(128,1025,128)]
 @csrf_exempt
 def showpage(request):
     bookID = Book.objects.get(bookID=request.POST.get('id'))
+    #原頁面資訊儲存
+    oldpage =  Image.objects.filter(book=bookID,page_number=request.POST.get('old_page_num'))
+    oldpage.update(description=request.POST.get('old_page_text'))
+    #新頁面資訊顯示
     pages = Image.objects.get(book=bookID,page_number=request.POST.get('page'))
     setblock1 = loader.get_template('makerspace/main.html')
     c ={
@@ -44,7 +48,6 @@ def delete(request):
 @csrf_exempt
 def insert(request):
     bookID = Book.objects.get(bookID=request.POST.get('id'))
-    #pages.update(description=request.POST['description'])
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     new_page = sum(1 for i in pages)
     seed = Image.objects.get(book=bookID,page_number=new_page-1).seeds

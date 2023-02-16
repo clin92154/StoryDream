@@ -30,6 +30,10 @@
             "background-image",
             `url("data:image/png;base64,${image}")`
           );
+          $(`#page${$("#page").val()}`).css(
+            "background-image",
+            `url("data:image/png;base64,${image}")`
+          );
         },
         error: function () {
           $("#page-image").html(`出現錯誤，請重新生圖`);

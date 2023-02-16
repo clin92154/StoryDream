@@ -3,11 +3,15 @@
 <div id="loadpages" class="container mt-10 of-y">
   {% include 'makerspace/loadpages.html' %}
 </div>
-<!-- 頁數選擇 -->
+<!--初始化設定-->
 <script>
   let init_page = document.getElementById("page");
-  init_page.value = "0";
+  init_page.value = 0;
+  let init_page_text = $("#text-area");
+  init_page_text.text("{{pages.first.description}}");
+  showpage(init_page.value);
 </script>
+<!-- 頁數選擇 -->
 <script type="text/javascript">
     let prompt = [];
     function changeColor(target) {
