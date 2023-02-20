@@ -1,5 +1,5 @@
 <!-- 頁數選擇 -->
-<div class="container mt-10 of-y">
+<div id="scrollpage" class="container mt-10 of-y">
   <div class="row">
     <ul class="ul-of">
       {% for page in pages %}
@@ -15,6 +15,9 @@
         />
       </li>
       <label>{{page.page_number}}</label>
+      <button id="del" type="button" onclick="remove({{page.page_number}})">
+        X
+      </button>
       {% endfor %}
       <li id="add" class="photo text-center" type="button">
         <img

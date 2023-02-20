@@ -40,10 +40,25 @@ def showpage(request):
     }
     return HttpResponse(setblock1.render(c))
 
-
-def delete(request):
-    pass
-
+# 4. deleter function:
+@csrf_exempt
+def remove(request):
+    #- 取得ID跟頁碼(e.g. 3
+    bookID = Book.objects.get(bookID=request.POST.get('id'))
+    page_num = int(request.POST.get('page'))
+    if len(Image.objects.filter(book=bookID))>1:
+        #- 將該頁面進行移除
+        Image.objects.filter(book=bookID,page_number=request.POST.get('page')).delete() 
+        pages = Image.objects.filter(book=bookID).order_by('page_number') #重新整理頁面
+        #- 接著後面頁面的頁碼-1
+        for page,item in enumerate(pages):
+            item.page_number=page
+            item.save()
+    # item.update(page_number=int(page))
+    pages = Image.objects.filter(book=bookID).order_by('page_number') #重新整理頁面
+    templates = loader.get_template('makerspace/loadpages.html')
+    context= {'pages':pages}
+    return HttpResponse(templates.render(context))       
 
 @csrf_exempt
 def insert(request):
@@ -66,13 +81,13 @@ def index(request):
     # else:
      # bookID = 12345678 #session['bookID']
     # image = PromptBase.objects.all().values()
-    bookID = Book.objects.first() #session['bookID']
+    bookID = Book.objects.get(bookID='1234567') #session['bookID']
     pages = Image.objects.filter(book=bookID).order_by('page_number') 
     count = sum(1 for i in pages)
     
 
     if not(count):
-        pages = Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,100000000),steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!")
+        pages = Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!")
     setting = {
         'pages':pages,
         'promptBase': promptBase,
@@ -90,7 +105,7 @@ def is_ajax(request):
 @csrf_exempt
 def generate(request):
     #request.is_ajax() and
-    bookID = Book.objects.first() #session['bookID']
+    bookID = Book.objects.get(bookID='1234567') #session['bookID']
     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
     if  is_ajax(request=request) and request.method == "POST":
         #只要生成圖像參數表單即可
@@ -132,7 +147,7 @@ def generate(request):
     image_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
     pages.update(prompt=prompt,image=image_str, height=height, width=width,seeds=seed,steps=steps, scale= scale)
     return JsonResponse({'image_str': image_str})
-    return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
+    # return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
 
 
 
@@ -149,8 +164,8 @@ def book_create(request):
 #建立繪本ID-取得會員資料等
 def style_choose(request):
     #取得繪本ID
-    #導入風格資料庫
     #若選擇後post接收風格的設定
+    #圖片模型的資料表參數設定為所選風格之參數
     #取得picturebookID、style prompt後重新導向至繪本建立頁面
     s = {'d':123}
     return render(request,'stylebase/style_choose.html',s) #將繪本ID傳送至頁面

@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name = "MakerSpace"),#第二個參數需設定views.py中的檢視函式(View Function)名稱(index)
     path('generate/', views.generate),
     path('insert/',views.insert),
+    path('remove/',views.remove),
     path('showpage/',views.showpage),
     path('book_create/', views.book_create),
     path('style_choose/', views.style_choose),
