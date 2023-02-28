@@ -31,15 +31,17 @@ SIZE = [size for size in range(128,1025,128)]
 @csrf_exempt
 def makerspace(request):
     if request.method == "POST":
-        bookID = Book.objects.get(id=request.POST.get('bookID')) #session['bookID']
+        bookID = Book.objects.get(id=int(request.POST['book_Id'])) #session['bookID']
         pages = Image.objects.filter(book=bookID).order_by('page_number') 
-        count = sum(1 for i in pages)
-        if not(count):
-            styleID = stylebase.objects.get(styleID=request.POST.get('styleID')) #取得繪本ID
-            steps = styleID.steps
-            Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=steps)
-
+    
+    count = sum(1 for i in pages)
+    if not(count):
+        styleID = stylebase.objects.get(styleID=request.POST['style_Id']) #取得繪本ID
+        steps = styleID.steps
+        Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=steps)
+    pages = Image.objects.filter(book=bookID).order_by('page_number') 
     context = {
+        'book':bookID,
         'pages':pages,
         'promptBase': promptBase,
         'categories': categories,
@@ -55,8 +57,7 @@ def makerspace(request):
 # ##################
 @csrf_exempt
 def showpage(request):
-    bookID = Book.objects.get(bookID=request.POST.get('id'))
-    #原頁面資訊儲存
+    bookID = Book.objects.get(id=int(request.POST.get('id')))    #原頁面資訊儲存
     oldpage =  Image.objects.filter(book=bookID,page_number=request.POST.get('old_page_num'))
     oldpage.update(description=request.POST.get('old_page_text'))
     #新頁面資訊顯示
@@ -77,7 +78,7 @@ def showpage(request):
 @csrf_exempt
 def remove(request):
     #- 取得ID跟頁碼(e.g. 3
-    bookID = Book.objects.get(bookID=request.POST.get('id'))
+    bookID = Book.objects.get(id=int(request.POST.get('id')))
     page_num = int(request.POST.get('page'))
     if len(Image.objects.filter(book=bookID))>1:
         #- 將該頁面進行移除
@@ -98,7 +99,7 @@ def remove(request):
 # ##################
 @csrf_exempt
 def insert(request):
-    bookID = Book.objects.get(bookID=request.POST.get('id'))
+    bookID = Book.objects.get(id=int(request.POST.get('id')))
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     new_page = sum(1 for i in pages)
     seed = Image.objects.get(book=bookID,page_number=new_page-1).seeds
@@ -123,7 +124,7 @@ def is_ajax(request):
 @csrf_exempt
 def generate(request):
     #取得bookID所綁定的style prompt
-    bookID = Book.objects.get(bookID='1234567') #session['bookID']
+    bookID = Book.objects.get(id=int(request.POST.get('id'))) #session['bookID']
     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
     if  is_ajax(request=request) and request.method == "POST":
         #只要生成圖像參數表單即可

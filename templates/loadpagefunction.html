@@ -1,6 +1,7 @@
 <!--移除頁面功能-->
 
 <script>
+  console.log("{{book.id}}");
   //演算法
   //1. 取得事件
   function remove(num) {
@@ -12,7 +13,7 @@
         url: "remove/",
         method: "POST",
         data: {
-          id: "{{pages.first.book}}",
+          id: "{{book.id}}",
           page: num, // 2. 取得ID、頁碼
         }, // 將表單資料用打包起來送出去
         dataType: "html",
@@ -36,7 +37,7 @@
         url: "insert/", // 要傳送的頁面
         method: "POST", // 使用 POST 方法傳送請求
         data: {
-          id: "{{pages.first.book}}",
+          id: "{{book.id}}",
         }, // 將表單資料用打包起來送出去
         dataType: "html",
         success: function (response) {
@@ -69,7 +70,7 @@
         data: {
           old_page_num: old_page_num,
           old_page_text: old_page_text,
-          id: "{{pages.first.book}}",
+          id: "{{book.id}}",
           page: num,
         }, // 將表單資料用打包起來送出去
         dataType: "html",
