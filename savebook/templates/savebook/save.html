@@ -1,0 +1,73 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container mt-10 mb-10">
+  <div class="row">
+    <div class="col-8">
+      <div class="row">
+        <div class="col-7">
+          <img
+            src="https://fakeimg.pl/600x400/?text=600X400&font=lobster"
+            class="img-fluid"
+            alt="..."
+          />
+          <div class="mb-3 mt-10">
+            <label for="exampleFormControlInput1" class="form-label"
+              >故事類別：</label
+            >
+            <select class="form-select" aria-label="Default select example">
+              <option selected disabled>請選擇類別</option>
+              <option value="1">類別1</option>
+              <option value="2">類別2</option>
+              <option value="3">類別3</option>
+            </select>
+            <div class="invalid-feedback">請選擇類別</div>
+          </div>
+          <p>頁數：20頁</p>
+          <p>狀態：公開</p>
+        </div>
+        <div class="col-5">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label"
+              >故事標題：</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder=""
+            />
+            <div class="invalid-feedback">請輸入故事標題</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1 " class="form-label"
+              >大綱：</label
+            >
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1 "
+              rows="10"
+            ></textarea>
+            <div class="invalid-feedback">請輸入大綱</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-3">
+      <p class="text-center">作者資訊</p>
+      <img
+        src="https://fakeimg.pl/200x200/?text=200X200&font=lobster"
+        class="mx-auto d-block img-fluid"
+        alt="..."
+        style="border-radius: 50%"
+      />
+      <p class="text-center mt-10">作者名稱</p>
+      <p class="text-center">XXX</p>
+      <div class="d-grid gap-2">
+        <button class="btn btn-outline-success mt-10" type="submit">
+          上傳
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

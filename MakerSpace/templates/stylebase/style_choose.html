@@ -11,8 +11,9 @@
       "
     >
       <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for style in stylebase %}
         <div class="col">
-          <a id="card-a" href="#">
+          <a id="card-a" href="#style?ID={{style.styleID}}">
             <div id="card-style" class="card h-100">
               <img
                 src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
@@ -20,163 +21,17 @@
                 alt="..."
               />
               <div class="card-body">
-                <h5 class="card-title">Style 1</h5>
+                <h5 id="{{style.styleID}}" class="card-title">
+                  {{style.name}}
+                </h5>
               </div>
             </div>
           </a>
         </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 2</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 3</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 4</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 5</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 6</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 7</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 8</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 9</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 10</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col">
-          <a id="card-a" href="#">
-            <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">Style 11</h5>
-              </div>
-            </div>
-          </a>
-        </div>
+        {%endfor%}
       </div>
     </div>
+
     <div class="col-3">
       <div class="card">
         <div class="card-header">選擇創作風格</div>
@@ -186,14 +41,30 @@
           </p>
         </div>
       </div>
-
-      <button class="btn btn-outline-success mt-10" type="submit">
+      <button
+        class="btn btn-outline-success mt-10"
+        onclick="next()"
+        type="button"
+      >
         下一步
       </button>
     </div>
   </div>
 </div>
-
-<!-- 複製此區塊即可-->
+<script>
+  function next() {
+    let styleID = location.hash.split("?ID=")[1];
+    let bookID = "{{book_id}}";
+    console.log(styleID + bookID);
+    fetch("{% url 'MakerSpace' %}", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ styleID: styleID, bookID: bookID }),
+    });
+  }
+</script>
 
 {% endblock%}

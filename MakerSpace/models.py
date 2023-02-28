@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from django.urls import reverse
 # Create your models here.
 
 
@@ -42,14 +43,17 @@ class PromptBase(models.Model):
 
 # 書本
 class Book(models.Model):
-    bookID = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100,blank=True, null=True)
     author = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     published_date = models.DateField(auto_now=True)
     
     def __str__(self):
-        return self.bookID
+        return "%s_%s" % (self.author,self.id)
+    
+    def get_absolute_url(self):
+        return reverse("book_id", kwargs={"id": self.name})
+
 
 # 繪本圖片
 class Image(models.Model):
@@ -65,3 +69,12 @@ class Image(models.Model):
     description = models.TextField(blank=True, null=True)
     def __str__(self):
         return f"{self.book}_page_{self.page_number}"
+    
+class stylebase(models.Model):
+    name = models.CharField(max_length=50)
+    styleID = models.CharField(max_length=20)
+    stylePrompt = models.CharField(max_length=255)
+    scale = models.IntegerField()
+    steps = models.IntegerField()
+    def __str__(self):
+        return self.name

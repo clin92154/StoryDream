@@ -1,0 +1,132 @@
+{% extends 'base.html' %}{% block content%}
+<style>
+  .mt-10 {
+    margin-top: 10px;
+  }
+
+  .mb-10 {
+    margin-bottom: 10px;
+  }
+
+  .mr-5 {
+    margin-right: 5px;
+  }
+
+  #card-a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  #card-style:hover {
+    border-width: medium;
+    border-color: blue;
+    z-index: 300;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .fa-love {
+    font-size: 1.25em;
+    line-height: 0em;
+    vertical-align: -0.075em;
+    color: #ff8a80;
+    float: right;
+  }
+</style>
+
+<div class="container mt-10 mb-10">
+  <div class="row">
+    <div class="col-12">
+      <div class="dropdown">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          所有類型
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">類型1</a></li>
+          <li><a class="dropdown-item" href="#">類型2</a></li>
+          <li><a class="dropdown-item" href="#">類型3</a></li>
+        </ul>
+
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          熱門
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <li><a class="dropdown-item" href="#">熱門1</a></li>
+          <li><a class="dropdown-item" href="#">熱門2</a></li>
+          <li><a class="dropdown-item" href="#">熱門3</a></li>
+        </ul>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="float: right"
+          onclick="create()"
+        >
+          建立繪本
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-10">
+    <div class="col-12">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col">
+          <a id="card-a" href="#">
+            <div id="card-style" class="card h-100">
+              <img
+                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <h5 class="card-title">Story 1</h5>
+                  </div>
+                  <div class="col-6">
+                    <i class="fa-solid fa-heart fa-love"> 123</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col">
+          <a id="card-a" href="#">
+            <div id="card-style" class="card h-100">
+              <img
+                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <h5 class="card-title">Story 11</h5>
+                  </div>
+                  <div class="col-6">
+                    <i class="fa-solid fa-heart fa-love"> 123</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'storyhall/create.html' %} {% endblock%}

@@ -21,10 +21,15 @@ class ImageInline(admin.TabularInline):
 
 class BookAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
-    list_display = ['bookID']
+    list_display = ['title','author']
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['book','page_number']
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Image,ImageAdmin)
+
+class styleBaseAdmin(admin.ModelAdmin):
+    list_display = ['name','styleID','stylePrompt','scale','steps']
+
+admin.site.register(stylebase,styleBaseAdmin)

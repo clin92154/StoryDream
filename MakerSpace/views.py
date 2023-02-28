@@ -3,6 +3,9 @@ import torch
 from diffusers import DiffusionPipeline, EulerDiscreteScheduler
 from django.http import JsonResponse ,HttpResponse
 
+from django.urls import resolve
+
+
 from django.views.decorators.csrf import csrf_exempt
 from django import template
 from django.template import loader ,Context
@@ -20,8 +23,36 @@ import random
 categories = Category.objects.all()
 promptBase = PromptBase.objects.all().values()
 SIZE = [size for size in range(128,1025,128)]
-# Create your views here.
 
+
+###################
+# 創作頁面
+# #################
+@csrf_exempt
+def makerspace(request):
+    if request.method == "POST":
+        bookID = Book.objects.get(id=request.POST.get('bookID')) #session['bookID']
+        pages = Image.objects.filter(book=bookID).order_by('page_number') 
+        count = sum(1 for i in pages)
+        if not(count):
+            styleID = stylebase.objects.get(styleID=request.POST.get('styleID')) #取得繪本ID
+            steps = styleID.steps
+            Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=steps)
+
+    context = {
+        'pages':pages,
+        'promptBase': promptBase,
+        'categories': categories,
+        'height': SIZE,
+        'width': SIZE,
+    }
+    #若無圖片先以第一頁為預設
+
+    return render(request, 'gallery/makerspace.html', context)
+
+################### 
+# 顯示頁面 
+# ##################
 @csrf_exempt
 def showpage(request):
     bookID = Book.objects.get(bookID=request.POST.get('id'))
@@ -40,7 +71,9 @@ def showpage(request):
     }
     return HttpResponse(setblock1.render(c))
 
-# 4. deleter function:
+###################
+# 移除功能
+# ##################
 @csrf_exempt
 def remove(request):
     #- 取得ID跟頁碼(e.g. 3
@@ -60,6 +93,9 @@ def remove(request):
     context= {'pages':pages}
     return HttpResponse(templates.render(context))       
 
+###################
+# 插入功能
+# ##################
 @csrf_exempt
 def insert(request):
     bookID = Book.objects.get(bookID=request.POST.get('id'))
@@ -74,42 +110,24 @@ def insert(request):
     return HttpResponse(templates.render(context))
 
 
-#主頁面
-def index(request):
-    # if session['bookID'] not in database:
-     # bookID = new ID
-    # else:
-     # bookID = 12345678 #session['bookID']
-    # image = PromptBase.objects.all().values()
-    bookID = Book.objects.get(bookID='1234567') #session['bookID']
-    pages = Image.objects.filter(book=bookID).order_by('page_number') 
-    count = sum(1 for i in pages)
-    
-
-    if not(count):
-        pages = Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!")
-    setting = {
-        'pages':pages,
-        'promptBase': promptBase,
-        'categories': categories,
-        'height': SIZE,
-        'width': SIZE,
-    }
-    #若無圖片先以第一頁為預設
-   
-    return render(request, 'gallery/index.html', setting)
-
+###################
+# 判斷是否為ajax事件
+# ##################
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
+
+###################
+# 生圖
+# ##################
 @csrf_exempt
 def generate(request):
-    #request.is_ajax() and
+    #取得bookID所綁定的style prompt
     bookID = Book.objects.get(bookID='1234567') #session['bookID']
     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
     if  is_ajax(request=request) and request.method == "POST":
         #只要生成圖像參數表單即可
-        prompt = request.POST['prompt']
+        prompt = request.POST['prompt'] #加上style
         scale = float(request.POST['scale'])
         seed = int(request.POST['seed'])
         steps = int(request.POST['steps'])
@@ -150,22 +168,23 @@ def generate(request):
     # return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
 
 
-
+################### 
+# 風格選擇頁面
+# ##################
 #建立繪本ID-取得會員資料等
-def book_create(request):
-    # picturebook_ID = 'AAAA_20230202_1' #產生會員亂碼_日期_第幾本
-    # Picturebook = Picturebook() #新物件儲存繪本ID、作者(暫時不用)
-    # Picturebook(picturebook_ID = picturebook_ID)
-    # Picturebook.save()
-    # request.session['picturebook_ID'] = picturebook_ID
-    #取得picturebookID後重新導向至風格頁面
-    return redirect('/gallery/style_choose.html') #將繪本ID傳送至頁面
-
-#建立繪本ID-取得會員資料等
-def style_choose(request):
+def style_choose(request,*args,**kwargs):
     #取得繪本ID
+    bookid = kwargs['book_id'].split('_')[1]
+
+    #導入風格資料庫
+    style = stylebase.objects.all()
+    context = {'stylebase': style,'book_id':bookid}
     #若選擇後post接收風格的設定
-    #圖片模型的資料表參數設定為所選風格之參數
     #取得picturebookID、style prompt後重新導向至繪本建立頁面
-    s = {'d':123}
-    return render(request,'stylebase/style_choose.html',s) #將繪本ID傳送至頁面
+    return render(request,'stylebase/style_choose.html',context) #將繪本ID傳送至頁面
+
+#建立繪本ID-取得會員資料等
+@csrf_exempt
+def book_create(request):
+    book = Book.objects.create(author=request.POST.get("id"))
+    return HttpResponse(f'makerspace/style_choose/{book}/') #將繪本ID傳送至頁面

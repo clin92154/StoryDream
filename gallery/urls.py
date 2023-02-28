@@ -18,5 +18,8 @@ from django.urls import path , include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('MakerSpace.urls')) #新增應用程式的網址
+    path('makerspace/', include('MakerSpace.urls')),
+    path('savebook/', include('savebook.urls')),#新增應用程式的網址
+    path('', include('storyhall.urls')),#新增應用程式的網址
 ]
+#新增應用程式的網址
