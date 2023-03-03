@@ -9,7 +9,7 @@
       e.preventDefault();
       $("#page-image").html("<div>開始生圖</div>");
       $.ajax({
-        url: "generate/", // 要傳送的頁面
+        url: "../generate/", // 要傳送的頁面
         method: "POST", // 使用 POST 方法傳送請求
         dataType: "json", //資料格式
         data: $("form").serialize(), // 將表單資料用打包起來送出去

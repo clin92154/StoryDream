@@ -21,7 +21,11 @@
                 alt="..."
               />
               <div class="card-body">
-                <h5 id="{{style.styleID}}" onclick="getStyle('{{style.styleID}}')" class="card-title">
+                <h5
+                  id="{{style.styleID}}"
+                  onclick="getStyle('{{style.styleID}}')"
+                  class="card-title"
+                >
                   {{style.name}}
                 </h5>
               </div>
@@ -42,21 +46,18 @@
         </div>
       </div>
       <form action="{% url 'MakerSpace' %}" method="post">
-        <input type="hidden" id="book_Id" name="book_Id" value='{{book_id}}'>
-        <input type="hidden" id="style_Id" name="style_Id" value=''>
-        <button
-          class="btn btn-outline-success mt-10"
-          type="submit"
-        >
+        <input type="hidden" id="book_Id" name="book_Id" value="{{book_id}}" />
+        <input type="hidden" id="style_Id" name="style_Id" value="" />
+        <button class="btn btn-outline-success mt-10" type="submit">
           下一步
-        </button>      
+        </button>
       </form>
     </div>
   </div>
 </div>
 <script>
-  function getStyle(style_Id){
-    document.getElementById('style_Id').value = style_Id;
+  function getStyle(style_Id) {
+    document.getElementById("style_Id").value = style_Id;
   }
 </script>
 {% endblock%}

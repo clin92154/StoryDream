@@ -8,11 +8,7 @@
         novalidate
       >
         {% csrf_token %}
-        <input
-        type="hidden"
-        name="bookID"
-        value="{{book.id}}"
-      />
+        <input type="hidden" id="bid" name="bid" value="{{book.id}}" />
         <label class="col-md-2"
           >第
           <input

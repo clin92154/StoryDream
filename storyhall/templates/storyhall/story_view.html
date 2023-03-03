@@ -1,0 +1,72 @@
+{% extends 'base.html' %}{% block content%}
+<div class="container mt-10 mb-10">
+  <div class="row">
+    <div class="col-3">
+      <p class="text-center">作者資訊</p>
+      <img
+        src="https://fakeimg.pl/200x200/?text=200X200&font=lobster"
+        class="mx-auto d-block img-fluid"
+        alt="..."
+        style="border-radius: 50%"
+      />
+      <p class="text-center mt-10">作者名稱</p>
+      <p class="text-center">{{ book.author }}</p>
+      <p class="mt-10">故事名稱：{{ book.title }}</p>
+      <p class="mt-10">大綱：{{ book.description }}</p>
+    </div>
+
+    <div class="col-9">
+      <div class="row">
+        <div class="col-12">{% include 'makerspace/right.html'%}</div>
+        <div class="col-12">
+          <!-- 頁數選擇 -->
+          <div class="container mt-10 of-y">
+            <div class="row">
+              <ul class="ul-of">
+                {% for page in pages %}
+                <li
+                  class="photo"
+                  type="button"
+                  onclick="showpage({{page.page_number}})"
+                  value="{{page.page_number}}"
+                >
+                  <img
+                    id="page{{page.page_number}}"
+                    style='background-image:url("data:image/png;base64,{{page.image}}")'
+                  />
+                </li>
+                <label>{{page.page_number}}</label>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--顯示所選頁面資訊-->
+<script>
+  function showpage(num) {
+    $(document).ready(function () {
+      $.ajaxSetup({
+        data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
+      });
+      $.ajax({
+        url: "../showpage/", // 要傳送的頁面
+        method: "POST", // 使用 POST 方法傳送請求
+        data: {
+          id: "{{ book.id }}",
+          page: num,
+        }, // 將表單資料用打包起來送出去
+        dataType: "html",
+        //若成功-> localStroge
+        success: function (response) {
+          $("#page-cover").html(response);
+        },
+      });
+    });
+  }
+</script>
+
+{% endblock%}

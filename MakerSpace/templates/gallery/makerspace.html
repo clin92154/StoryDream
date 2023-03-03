@@ -1,15 +1,22 @@
 {% extends 'base.html' %} {% block content %}
 <div id="main">{% include 'makerspace/main.html'%}</div>
+<div>
+  <form action="../../savebook/{{book.id}}/" method="post">
+    <button type="submit">儲存繪本</button>
+  </form>
+</div>
+
 <div id="loadpages" class="container mt-10 of-y">
   {% include 'makerspace/loadpages.html' %}
 </div>
 
 <!--初始化設定-->
 <script>
+  let bid = Number(document.getElementById("bid").value);
   let init_page = document.getElementById("page");
   init_page.value = 0;
-  let init_page_text = $("#text-area");
-  init_page_text.text("{{pages.first.description}}");
+  let init_page_text = document.getElementById("text-area");
+  init_page_text.text = "{{pages.first.description}}";
   showpage(init_page.value);
 </script>
 
