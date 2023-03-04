@@ -180,11 +180,11 @@ def generate(request):
 #建立繪本ID-取得會員資料等
 def style_choose(request,*args,**kwargs):
     #取得繪本ID
-    bookid = kwargs['book_id'].split('_')[1]
+    book = kwargs['book_id']
 
     #導入風格資料庫
     style = stylebase.objects.all()
-    context = {'stylebase': style,'book_id':bookid}
+    context = {'stylebase': style,'book_id':book}
     #若選擇後post接收風格的設定
     #取得picturebookID、style prompt後重新導向至繪本建立頁面
     return render(request,'stylebase/style_choose.html',context) #將繪本ID傳送至頁面
@@ -192,5 +192,11 @@ def style_choose(request,*args,**kwargs):
 #建立繪本ID-取得會員資料等
 @csrf_exempt
 def book_create(request):
-    book = Book.objects.create(author=request.POST.get("id"))
-    return HttpResponse(f'makerspace/style_choose/{book}/') #將繪本ID傳送至頁面
+    if request.POST.get("id"):
+        uid = request.POST.get("id")
+    else:
+        uid = 'guest'
+
+
+    book = Book.objects.create(author=uid)
+    return HttpResponse(f'makerspace/style_choose/{book.id}/') #將繪本ID傳送至頁面

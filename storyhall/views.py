@@ -47,8 +47,8 @@ def index(request):
     content = {
         'books':book
     }
-    if username:
-        return render(request,'storyhall/index.html',content)
+    
+    return render(request,'storyhall/index.html',content)
     #若選擇後post接收風格的設定
     #取得picturebookID、style prompt後重新導向至繪本建立頁面
 

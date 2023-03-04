@@ -49,7 +49,7 @@ class Book(models.Model):
     published_date = models.DateField(auto_now=True)
     
     def __str__(self):
-        return "%s_%s" % (self.author,self.id)
+        return str(self.id)
     
     def get_absolute_url(self):
         return reverse("book_id", kwargs={"id": self.name})
@@ -68,7 +68,7 @@ class Image(models.Model):
     scale = models.IntegerField(default=7)
     description = models.TextField(blank=True, null=True)
     def __str__(self):
-        return f"{self.book}_page_{self.page_number}"
+        return f"{self.page_number}"
     
 class stylebase(models.Model):
     name = models.CharField(max_length=50)
