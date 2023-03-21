@@ -21,38 +21,6 @@
       <div class="container">
         <div class="row">
           <div class="row mt-10">
-            <!-- 高度 -->
-            <label class="col-md-2 col-form-label">高度</label>
-            <div class="col-md-10">
-              <select id="height" name="height" class="form-control">
-                <option disabled selected value="{{pages.height}}">
-                  請選擇高度
-                </option>
-                {% for size in height %}
-                <option value="{{ size }}">{{size}}</option>
-                {% endfor %}
-              </select>
-              <div class="invalid-feedback">請選擇高度</div>
-            </div>
-          </div>
-
-          <div class="row mt-10">
-            <!-- 寬度 -->
-            <label class="col-md-2 col-form-label">寬度</label>
-            <div class="col-md-10">
-              <select id="width" name="width" class="form-control">
-                <option disabled selected value="{{pages.width}}">
-                  請選擇寬度
-                </option>
-                {% for size in width %}
-                <option value="{{ size }}">{{size}}</option>
-                {% endfor %}
-              </select>
-              <div class="invalid-feedback">請選擇寬度</div>
-            </div>
-          </div>
-
-          <div class="row mt-10">
             <label class="col-md-2 col-form-label">steps</label>
             <div class="col-md-10">
               <input

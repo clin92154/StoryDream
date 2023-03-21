@@ -5,7 +5,6 @@ from django.http import JsonResponse ,HttpResponse
 
 from django.urls import resolve
 
-
 from django.views.decorators.csrf import csrf_exempt
 from django import template
 from django.template import loader ,Context
@@ -17,6 +16,7 @@ from PIL import Image
 from .models import *
 #給隨機seed
 import random
+import requests , os , replicate
 
 
 #類別資料庫及關鍵字資料庫導入
@@ -98,9 +98,9 @@ def remove(request):
     context= {'pages':pages}
     return HttpResponse(templates.render(context))       
 
-###################
-# 插入功能
-# ##################
+###########
+# 插入功能#
+# #########
 @csrf_exempt
 def insert(request):
     bookID = Book.objects.get(id=int(request.POST.get('id')))
@@ -137,46 +137,57 @@ def generate(request):
         scale = float(request.POST['scale'])
         seed = int(request.POST['seed'])
         steps = int(request.POST['steps'])
-        height = int(request.POST['height'])
-        width =  int(request.POST['width'])
+        # height = int(request.POST['height'])
+        # width =  int(request.POST['width'])
         print(prompt,scale,seed,steps,sep='\n')
 
-    device = "cuda" if torch.cuda.is_available() else 'cpu'
-    model_id = "stabilityai/stable-diffusion-2"
-    auth_token = "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"
-
-    scheduler = EulerDiscreteScheduler.from_pretrained(
-        model_id, subfolder="scheduler")
-    pipe = DiffusionPipeline.from_pretrained(
-        model_id, use_auth_token=auth_token, scheduler=scheduler).to(device)
+    # device = "cuda" if torch.cuda.is_available() else 'cpu'
+    # model_id = "stabilityai/stable-diffusion-2"
+    # auth_token = "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"
+    # scheduler = EulerDiscreteScheduler.from_pretrained(
+    #     model_id, subfolder="scheduler")
+    # pipe = DiffusionPipeline.from_pretrained(
+    #     model_id, use_auth_token=auth_token, scheduler=scheduler).to(device)
     # use_auth_token = auth_token
     # with autocast(device):
-
     """
     seed : 能控制圖片生成的多樣性，
     step : 次數越多，文本推理步驟就越多
     SCALE:
     """
 
-    generator = torch.Generator(device).manual_seed(seed)  # seed設定，seed越高
-    image = pipe(prompt,  height=height, width=width, guidance_scale=scale,
-                 num_inference_steps=steps, generator=generator).images[0]
+    #Set the REPLICATE_API_TOKEN environment variable
+    os.environ["REPLICATE_API_TOKEN"] = "8eb488ca6a9389d344fa91a993d5155d6451ce4e"
 
+    model = replicate.models.get("stability-ai/stable-diffusion")
+    version = model.versions.get("db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf")
+    # https://replicate.com/stability-ai/stable-diffusion/versions/db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf#input
+    inputs = {
+        'prompt': prompt ,
+        'image_dimensions': "768x768",
+        'num_outputs': 1,
+        'num_inference_steps': steps,
+        'guidance_scale': scale,
+        'scheduler': "DPMSolverMultistep",
+        'seed':seed,
+    }
 
+    # https://replicate.com/stability-ai/stable-diffusion/versions/db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf#output-schema
+    output = version.predict(**inputs)[0]
+    response = requests.get(output)
+    buffer = BytesIO(response.content)
     #取得目前繪本id資料夾，若沒有則建立並依據編號存到該路徑中
     # image.save(f'media/image/tmp.png')
     # PATH = settings.MEDIA_ROOT + '/image/tmp.png'
-    buffer = BytesIO()
-    image.save(buffer, format="PNG")
     image_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-    pages.update(prompt=prompt,image=image_str, height=height, width=width,seeds=seed,steps=steps, scale= scale)
+    pages.update(prompt=prompt,image=image_str, height=768, width=768,seeds=seed,steps=steps, scale= scale)
     return JsonResponse({'image_str': image_str})
     # return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
 
 
-################### 
-# 風格選擇頁面
-# ##################
+##############
+# 風格選擇頁面#
+# ############
 #建立繪本ID-取得會員資料等
 def style_choose(request,*args,**kwargs):
     #取得繪本ID
@@ -196,7 +207,6 @@ def book_create(request):
         uid = request.POST.get("id")
     else:
         uid = 'guest'
-
 
     book = Book.objects.create(author=uid)
     return HttpResponse(f'makerspace/style_choose/{book.id}/') #將繪本ID傳送至頁面
