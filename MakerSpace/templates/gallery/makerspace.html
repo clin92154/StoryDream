@@ -1,10 +1,5 @@
 {% extends 'base.html' %} {% block content %}
 <div id="main">{% include 'makerspace/main.html'%}</div>
-<div>
-  <form action="../../savebook/{{book.id}}/" method="post">
-    <button type="submit">儲存繪本</button>
-  </form>
-</div>
 
 <div id="loadpages" class="container mt-10 of-y">
   {% include 'makerspace/loadpages.html' %}
@@ -106,7 +101,7 @@
     {% for prompt in promptBase %}
   //      console.log(id.value == "{{prompt.category_id}}");
       if(id.value == "{{prompt.category_id}}"){
-        document.querySelector("#promptbase").innerHTML += '<button class="btn btn-outline-dark radius" type="button" id=0  onclick="changeColor(this)" value={{prompt.keyword}}>{{prompt.keyword}}</button>';
+        document.querySelector("#promptbase").innerHTML += '<button class="btn btn-outline-dark radius"  style="margin: 0.2rem; padding: 0.1rem; width: 80px" type="button" id=0  onclick="changeColor(this)" value={{prompt.keyword}}>{{prompt.keyword}}</button>';
       }
     {%endfor%}
     reloadPrompt(pb,prompt);
@@ -116,9 +111,12 @@
     Return.classList.add("btn");
     Return.classList.add("btn-outline-dark");
     Return.classList.add("radius");
-    Return.innerText = "返回";
+    Return.style.margin = "0.2rem";
+    Return.style.padding ="0.1rem";
+    Return.style.width = "80px";
+    Return.innerText = "🔙";
     Return.addEventListener("click", (e) => {
-      document.querySelector("#promptbase").innerHTML = '{% for category in categories %}<button class="btn btn-outline-dark radius" type="button" onclick="showKeyword(this)" value={{category.id}}>{{category.name}}</button>{% endfor %}'
+      document.querySelector("#promptbase").innerHTML = '{% for category in categories %}<button class="btn btn-outline-dark radius" type="button" onclick="showKeyword(this)"  style="margin: 0.2rem; padding: 0.1rem; width: 80px" value={{category.id}}>{{category.name}}</button>{% endfor %}'
   });
 
   pb.appendChild(Return);

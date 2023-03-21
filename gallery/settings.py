@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'MakerSpace.apps.MakerspaceConfig',
     'savebook.apps.SavebookConfig',
-    'storyhall.apps.StoryhallConfig'
+    'storyhall.apps.StoryhallConfig',
+    'account.apps.AccountConfig'
 ]
 
 MIDDLEWARE = [

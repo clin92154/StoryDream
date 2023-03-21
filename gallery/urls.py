@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('makerspace/', include('MakerSpace.urls')),
     path('savebook/', include('savebook.urls')),#新增應用程式的網址
+    path('account/', include('account.urls')),
     path('', include('storyhall.urls')),#新增應用程式的網址
 ]
 #新增應用程式的網址

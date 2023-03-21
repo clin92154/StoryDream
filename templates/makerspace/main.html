@@ -1,6 +1,6 @@
-<div class="container mt-10">
+<div class="container mt-10 ">
   <div class="row">
-    <div class="col-4">
+    <div class="col-4 white-block">
       <form
         id="generate"
         method="POST"
@@ -9,19 +9,11 @@
       >
         {% csrf_token %}
         <input type="hidden" id="bid" name="bid" value="{{book.id}}" />
-        <label class="col-md-2"
-          >第
-          <input
-            id="page"
-            type="number"
-            name="page"
-            class="form-control"
-            value="{{pages.page_number}}"
-            readonly="readonly"
-          />
-          頁</label
-        >
-        {% include 'makerspace/left.html'%}
+        
+          <p class="text-center fz-24">第 {{pages.page_number}} 頁</p>
+          <input id="page" type="hidden" name="page" value="{{pages.page_number}}" readonly="readonly" />
+          
+          {% include 'makerspace/left.html'%}
       </form>
     </div>
     <div class="col-8">
@@ -29,6 +21,7 @@
     </div>
   </div>
 </div>
+
 
 {% comment %}
 <!--移除頁面功能-->

@@ -1,32 +1,44 @@
 <!-- 頁數選擇 -->
-<div id="scrollpage" class="container mt-10 of-y">
+<div  class="container mt-10" >
   <div class="row">
-    <ul class="ul-of">
-      {% for page in pages %}
-      <li
-        class="photo"
-        type="button"
-        onclick="showpage({{page.page_number}})"
-        value="{{page.page_number}}"
-      >
-        <img
-          id="page{{page.page_number}}"
-          style='background-image:url("data:image/png;base64,{{page.image}}")'
-        />
-      </li>
-      <label>{{page.page_number}}</label>
-      <button id="del" type="button" onclick="remove({{page.page_number}})">
-        X
-      </button>
-      {% endfor %}
-      <li id="add" class="photo text-center" type="button">
-        <img
-          style="
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJUAAABkCAIAAAAADuWkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAIASURBVHhe7di9SsNQHEDxvoqDg4Pg4ObgF/okIqWKFFwV30Kd1UmfQBf7DkUdikPBQUw/tLRFaEWDKUWuUCsU7UlP+A3hf4dATi4JyTxXq7Uo+u6lXm+3Wt1OJ5hrTLx/Hplg2mw0Xtvtt243mP+j+BlqN5vPtVown2RJvPjo9atHUfXpqb88KtVvE41WuP8EUKn0z0fQL967iWCu3+rdxi95fjQB+69SSfHjhe2X6irD8/3HZj82+7HZj81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH5v92OzHZj+2NPe7urw6PTmLnZ9fPJTLwWo6pLlfbmtnanomtri8dlMsBqvpYD82+7HZj81+bPZjsx+b/djsx2Y/NvuxUfsdHR7n87uDLa2uJ/1m5+azue1gNbC3f3BfKgVXGX/Ufv29NSrQPWq/Hvv9KfslqP3id1V8uwfb2MwmbRYWVwrXhWA1cHd7Gz0+BlcZf9R+w/D7k81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y+v/I4X+2xxGmvtNAvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH5v92OzHZj82+7HZj81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH1kUfQAfkkmdnfdJ2AAAAABJRU5ErkJggg==');
-          "
-        />
-      </li>
-    </ul>
+    <div id="scrollpage" class="col-11 white-block of-y" style="padding-bottom:0px;">
+      <ul class="ul-of">
+        {% for page in pages %}
+        <li
+          class="photo"
+          type="button"
+          onclick="showpage({{page.page_number}})"
+          value="{{page.page_number}}"
+        >
+          <img
+            id="page{{page.page_number}}"
+            style='background-image:url("data:image/png;base64,{{page.image}}")'
+          />
+        </li>
+        <label>{{page.page_number}}</label>
+        <button id="del" type="button" onclick="remove({{page.page_number}})">
+          X
+        </button>
+        {% endfor %}
+        <li id="add" class="photo text-center" type="button">
+          <img
+            style="
+              background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJUAAABkCAIAAAAADuWkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAIASURBVHhe7di9SsNQHEDxvoqDg4Pg4ObgF/okIqWKFFwV30Kd1UmfQBf7DkUdikPBQUw/tLRFaEWDKUWuUCsU7UlP+A3hf4dATi4JyTxXq7Uo+u6lXm+3Wt1OJ5hrTLx/Hplg2mw0Xtvtt243mP+j+BlqN5vPtVown2RJvPjo9atHUfXpqb88KtVvE41WuP8EUKn0z0fQL967iWCu3+rdxi95fjQB+69SSfHjhe2X6irD8/3HZj82+7HZj81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH5v92OzHZj+2NPe7urw6PTmLnZ9fPJTLwWo6pLlfbmtnanomtri8dlMsBqvpYD82+7HZj81+bPZjsx+b/djsx2Y/NvuxUfsdHR7n87uDLa2uJ/1m5+azue1gNbC3f3BfKgVXGX/Ufv29NSrQPWq/Hvv9KfslqP3id1V8uwfb2MwmbRYWVwrXhWA1cHd7Gz0+BlcZf9R+w/D7k81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y+v/I4X+2xxGmvtNAvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH5v92OzHZj82+7HZj81+bPZjsx+b/djsx2Y/Nvux2Y/Nfmz2Y7Mfm/3Y7MdmPzb7sdmPzX5s9mOzH1kUfQAfkkmdnfdJ2AAAAABJRU5ErkJggg==');
+            "
+          />
+        </li>
+      </ul>
+    </div>
+    <div class="col-1">
+        <form action="../../savebook/{{book.id}}/" method="post">
+          <div class="d-grid gap-2" style="height:100%;">
+            <button class="btn btn-success " type="submit" >  
+              <i class="fa-solid fa-arrow-right fa-2x"></i>
+            </button>
+          </div>
+          
+        </form>
+    </div>
   </div>
 </div>
 {% include 'loadpagefunction.html' %}

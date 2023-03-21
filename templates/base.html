@@ -17,6 +17,9 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <link href="{% static 'css/style2.css' %}" rel="stylesheet" />
 
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://kit.fontawesome.com/2fa17175da.css" crossorigin="anonymous">
+
     <title>創作中心</title>
   </head>
 
@@ -42,9 +45,9 @@
               <a
                 class="nav-link"
                 aria-current="page"
-                href="#!"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                href="{%url 'login'%}"
+                {% comment %} data-bs-toggle="modal"
+                data-bs-target="#exampleModal" {% endcomment %}
                 >登入</a
               >
             </li>
@@ -78,5 +81,8 @@
     <!-- 表單驗證 全網站通用 -->
     {% load static %}
     <script src="{% static '/js/confirm.js' %}" type="text/javascript"></script>
+    
+    <!-- fontawesome 全網站通用 -->
+    <script src="https://kit.fontawesome.com/2fa17175da.js" crossorigin="anonymous"></script>
   </body>
 </html>

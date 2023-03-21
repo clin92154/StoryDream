@@ -1,8 +1,8 @@
 {% extends 'base.html' %}{% block content%}
-<div class="container mt-10 mb-10">
+<div class="container mt-10 white-block">
   <div class="row">
     <div class="col-3">
-      <p class="text-center">作者資訊</p>
+      <p class="text-center fz-24">作者資訊</p>
       <img
         src="https://fakeimg.pl/200x200/?text=200X200&font=lobster"
         class="mx-auto d-block img-fluid"
@@ -20,7 +20,7 @@
         <div class="col-12">{% include 'makerspace/right.html'%}</div>
         <div class="col-12">
           <!-- 頁數選擇 -->
-          <div class="container mt-10 of-y">
+          <div class="container mt-30 of-y">
             <div class="row">
               <ul class="ul-of">
                 {% for page in pages %}

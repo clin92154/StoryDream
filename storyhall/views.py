@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from MakerSpace.models import * 
 from django.http import JsonResponse ,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django import template
 from django.template import loader ,Context
 # Create your views here.
@@ -10,7 +11,9 @@ from django.template import loader ,Context
 ##
 # 顯示頁面
 ##
+
 @csrf_exempt
+@login_required(login_url='login')
 def showpage(request):
     bookID = Book.objects.get(id=int(request.POST.get('id'))) 
     #新頁面資訊顯示
@@ -25,6 +28,7 @@ def showpage(request):
 ##
 # 顯示繪本
 ##
+@login_required(login_url='login')
 def showStory(request , *args, **kwargs):
     #取得已經公開繪本的ID
     book_id = int(kwargs['book_id'])
@@ -40,6 +44,7 @@ def showStory(request , *args, **kwargs):
 ##
 # 瀏覽
 ##
+@login_required(login_url='login')
 def index(request):
     #取得已經公開繪本的ID、作者資訊
     username = request.GET.get("id")

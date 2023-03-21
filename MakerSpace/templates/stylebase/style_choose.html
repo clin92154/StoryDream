@@ -1,8 +1,8 @@
 {%extends 'base.html'%} {%block content%}
-<div class="container mt-10 mb-10">
+<div class="container mt-10 mb-10 ">
   <div class="row">
     <div
-      class="col-9 pre-scrollable"
+      class="col-9 pre-scrollable white-block"
       style="
         overflow-x: hidden;
         overflow-y: auto;
@@ -10,10 +10,15 @@
         scrollbar-gutter: stable;
       "
     >
+    <form action="{% url 'MakerSpace' %}" method="post">
+      <input type="hidden" id="book_Id" name="book_Id" value="{{book_id}}" />
+      <input type="hidden" id="style_Id" name="style_Id" value="" />
+        
       <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for style in stylebase %}
         <div class="col">
-          <a id="card-a" href="#style?ID={{style.styleID}}">
+        <button class="btn btn-style-choose" type="submit">
+          <a  id="card-a" href="#style?ID={{style.styleID}}" onclick="getStyle('{{style.styleID}}')" >
             <div id="card-style" class="card h-100">
               <img
                 src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
@@ -23,7 +28,7 @@
               <div class="card-body">
                 <h5
                   id="{{style.styleID}}"
-                  onclick="getStyle('{{style.styleID}}')"
+                  
                   class="card-title"
                 >
                   {{style.name}}
@@ -31,10 +36,12 @@
               </div>
             </div>
           </a>
+        </button>
         </div>
         {%endfor%}
       </div>
     </div>
+  </form>
 
     <div class="col-3">
       <div class="card">
@@ -45,13 +52,17 @@
           </p>
         </div>
       </div>
+      <!--
       <form action="{% url 'MakerSpace' %}" method="post">
         <input type="hidden" id="book_Id" name="book_Id" value="{{book_id}}" />
         <input type="hidden" id="style_Id" name="style_Id" value="" />
-        <button class="btn btn-outline-success mt-10" type="submit">
-          下一步
-        </button>
+        <div class="d-grid gap-2 mx-auto mt-10">
+          <button class="btn btn-success" type="submit">  
+            <i class="fa-solid fa-arrow-right fa-2x"></i>
+          </button>
+        </div>
       </form>
+    -->
     </div>
   </div>
 </div>
@@ -59,5 +70,6 @@
   function getStyle(style_Id) {
     document.getElementById("style_Id").value = style_Id;
   }
+
 </script>
 {% endblock%}
