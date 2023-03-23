@@ -52,18 +52,14 @@
         <div class="col">
           <a id="card-a" href="{% url 'storyview' book.id %}">
             <div id="card-style" class="card h-100">
-              <img
-                src="https://fakeimg.pl/300x200/?text=300X200&font=lobster"
-                class="card-img-top"
-                alt="..."
-              />
+              <img src="book.image" class="card-img-top" alt="..." />
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
                     <h5 class="card-title">{{book.title}}</h5>
                   </div>
                   <div class="col-6">
-                    <i class="fa-solid fa-heart fa-love"> 123</i>
+                    <i class="fa-solid fa-heart fa-love">123</i>
                   </div>
                 </div>
               </div>

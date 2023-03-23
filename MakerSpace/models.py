@@ -40,14 +40,27 @@ class PromptBase(models.Model):
 
     def getCategory(self):
         return self.category
+    
+class Stylebase(models.Model):
+    name = models.CharField(max_length=50)
+    styleID = models.CharField(max_length=20)
+    stylePrompt = models.CharField(max_length=255)
+    style_preview = models.TextField(blank=True,null=True)
+    scale = models.IntegerField(default=7)
+    steps = models.IntegerField(default=50)
+    def __str__(self):
+        return self.name
 
 # 書本
 class Book(models.Model):
     title = models.CharField(max_length=100,blank=True, null=True)
     author = models.CharField(max_length=100)
+    like = models.IntegerField(default=0)
     description = models.TextField(blank=True, null=True)
+    book_category = models.CharField(max_length=50,null=True)
     published_date = models.DateField(auto_now=True)
-    
+    public_status = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.id)
     
@@ -64,17 +77,10 @@ class Image(models.Model):
     height = models.IntegerField(default=512)
     width = models.IntegerField(default=512)
     steps = models.IntegerField(default=50)
-    seeds = models.IntegerField(default=222222222, null=True)
+    seeds = models.IntegerField(default=512, null=True)
     scale = models.IntegerField(default=7)
     description = models.TextField(blank=True, null=True)
+    img_location = models.TextField(null=True)
     def __str__(self):
         return f"{self.page_number}"
     
-class stylebase(models.Model):
-    name = models.CharField(max_length=50)
-    styleID = models.CharField(max_length=20)
-    stylePrompt = models.CharField(max_length=255)
-    scale = models.IntegerField()
-    steps = models.IntegerField()
-    def __str__(self):
-        return self.name

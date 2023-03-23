@@ -49,8 +49,10 @@ def index(request):
     #取得已經公開繪本的ID、作者資訊
     username = request.GET.get("id")
     book = Book.objects.all()
+    book_cover =  Image.objects.all()
     content = {
-        'books':book
+        'books':book,
+        'book_cover':book_cover
     }
     
     return render(request,'storyhall/index.html',content)

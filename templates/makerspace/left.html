@@ -20,46 +20,20 @@
     >
       <div class="container">
         <div class="row">
-          <!-- <div class="row mt-10">
-            高度 
-            <label class="col-md-2 col-form-label">高度</label>
-            <div class="col-md-10">
-              <select id="height" name="height" class="form-control">
-                <option disabled selected value="{{pages.height}}">
-                  請選擇高度
-                </option>
-                {% for size in height %}
-                <option value="{{ size }}">{{size}}</option>
-                {% endfor %}
-              </select>
-              <div class="invalid-feedback">請選擇高度</div>
-            </div>
-          </div>-->
-
-          <!-- <div class="row mt-10">
-            寬度 
-            <label class="col-md-2 col-form-label">寬度</label>
-            <div class="col-md-10">
-              <select id="width" name="width" class="form-control">
-                <option disabled selected value="{{pages.width}}">
-                  請選擇寬度
-                </option>
-                {% for size in width %}
-                <option value="{{ size }}">{{size}}</option>
-                {% endfor %}
-              </select>
-              <div class="invalid-feedback">請選擇寬度</div>
-            </div>
-          </div>-->
           {% load static %}
-
           <div class="row mt-10">
             <label class="col-md-2">擺放位置</label>
             <div class="col-md-10">
               <button
-                class="btn btn-outline-secondary btn-up"
+                id="area-top"
+                {% if  pages.img_location == 'area-top'%}
+                  class="btn btn-outline-secondary btn-up active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-up"
+                {% endif %}
+                class="btn btn-outline-secondary btn-up active"
                 type="button"
-                onclick="up()"
+                onclick="Changelocation(0)"
               >
                 <img
                   src="{% static 'image/image-up.png' %}"
@@ -67,9 +41,14 @@
                 />
               </button>
               <button
-                class="btn btn-outline-secondary btn-down"
+                id="area-bottom"
+                {% if  pages.img_location == 'area-bottom'%}
+                class="btn btn-outline-secondary btn-down active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-down"
+                {% endif %}                
                 type="button"
-                onclick="down()"
+                onclick="Changelocation(1)"
               >
                 <img
                   src="{% static 'image/image-down.png' %}"
@@ -77,9 +56,15 @@
                 />
               </button>
               <button
+                id="area-left"
+                {% if  pages.img_location == 'area-left'%}
+                class="btn btn-outline-secondary btn-left active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-left"
+                {% endif %}  
                 class="btn btn-outline-secondary btn-left"
                 type="button"
-                onclick="left()"
+                onclick="Changelocation(2)"
               >
                 <img
                   src="{% static 'image/image-left.png' %}"
@@ -87,9 +72,14 @@
                 />
               </button>
               <button
-                class="btn btn-outline-secondary btn-right"
+                id="area-right"
+                {% if  pages.img_location == 'area-right'%}
+                class="btn btn-outline-secondary btn-right active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-right"
+                {% endif %}  
                 type="button"
-                onclick="right()"
+                onclick="Changelocation(3)"
               >
                 <img
                   src="{% static 'image/image-right.png' %}"
@@ -225,22 +215,34 @@
 </div>
 
 <script>
-  function left() {
+  function Changelocation(num) {
+    let location_id = ["area-top", "area-bottom", "area-left", "area-right"];
+    for (let n = 0; n < 4; n++) {
+      document.getElementById(location_id[n]).classList.remove("active");
+    }
+    let btn = document.getElementById(location_id[num]);
+    btn.classList.add("active");
+    let page_cover = document.getElementById("page-cover");
+    page_cover.className = location_id[num];
+  }
+</script>
+  {% comment %} function left() {
     let left = document.querySelector("#page-cover");
-    left.style = "justify-content: flex-end; flex-direction: row-reverse;";
     let text = document.querySelector("#page-text");
-    text.style = "width: 30%; height: 100%;";
     let text_area = document.querySelector("#page-text>#text-area");
-    text_area.style = "padding: 15%;";
     let image = document.querySelector("#page-image");
-    image.style = "width: 70%; height: 100%;";
     let btn_left = document.querySelector(".btn-left");
-    btn_left.classList.add("active");
     let btn_right = document.querySelector(".btn-right");
-    btn_right.classList.remove("active");
     let btn_up = document.querySelector(".btn-up");
-    btn_up.classList.remove("active");
     let btn_down = document.querySelector(".btn-down");
+
+    text.style = "width: 50%; height: 100%;";
+    left.style = "justify-content: flex-end; flex-direction: row-reverse;";
+    text_area.style = "padding: 15%;";
+    image.style = "width: 70%; height: 100%;";
+    btn_left.classList.add("active");
+    btn_right.classList.remove("active");
+    btn_up.classList.remove("active");
     btn_down.classList.remove("active");
   }
 
@@ -297,5 +299,5 @@
     btn_up.classList.remove("active");
     let btn_down = document.querySelector(".btn-down");
     btn_down.classList.add("active");
-  }
+  } {% endcomment %}
 </script>

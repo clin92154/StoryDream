@@ -12,6 +12,8 @@
   init_page.value = 0;
   let init_page_text = document.getElementById("text-area");
   init_page_text.text = "{{pages.first.description}}";
+  let init_page_location = document.getElementById("page-cover");
+  init_page_location.className = "{{pages.first.img_location}}";
   showpage(init_page.value);
 </script>
 
@@ -123,4 +125,5 @@
 
   }
 </script>
+
 {% endblock %}

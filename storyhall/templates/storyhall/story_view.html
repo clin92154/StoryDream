@@ -45,8 +45,22 @@
     </div>
   </div>
 </div>
-<!--顯示所選頁面資訊-->
+
+<!--顯示封面-->
+
+<script></script>
+
 <script>
+  //初始化設定
+  let init_page_location = document.getElementById("page-cover");
+  let init_coverpage = document.getElementById("page-image");
+  let init_coverpage_content = document.getElementById("text-area");
+  init_page_location.className = "{{pages.first.img_location}}";
+  init_coverpage.style =
+    "background-image: url('data:image/png;base64,{{pages.first.image}}')";
+  init_coverpage_content.text = "{{pages.first.description}}";
+  //顯示所選頁面資訊
+
   function showpage(num) {
     $(document).ready(function () {
       $.ajaxSetup({

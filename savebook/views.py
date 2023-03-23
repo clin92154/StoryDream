@@ -9,11 +9,12 @@ def save(request , *args, **kwargs):
     if request.method == "POST":
         book_id = int(kwargs['book_id'])
         book = Book.objects.filter(id = book_id)
-        book.update(title=request.POST['book_title'],description=request.POST['description'])
+        book.update(title=request.POST['book_title'],description=request.POST['description'] )
+        #,cover_page =request.POST['cover_page']
         ID = Book.objects.get(id = book_id).author
 
         return redirect(f'../../../?id={ID}')  
-
+    
 @csrf_exempt
 def savebook(request,*args, **kwargs):
     book_id = int(kwargs['book_id'])

@@ -14,5 +14,6 @@ urlpatterns = [
     path('showpage/',views.showpage),
     path('book_create/', views.book_create),
     path('style_choose/<book_id>/', views.style_choose, name='book_id'),
+    path('ChangeLocation/', views.ChangeLocation , name='ChangeLocation')
    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

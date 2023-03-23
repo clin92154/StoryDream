@@ -1,9 +1,17 @@
-<div id="page-cover">
-
-  <div id="page-image" style="background-image: url('data:image/png;base64,{{pages.image}}')"></div>
+<div
+  id="page-cover"
+  {% if 'pages.img_location' == "area-top" %}
+  class="area-top"
+  {% else %}
+  class="{{pages.img_location}}"
+  {% endif %}
+>
+  <div
+    id="page-image"
+    style="background-image: url('data:image/png;base64,{{pages.image}}')"
+  ></div>
 
   <div id="page-text">
-    <textarea id="text-area" cols="30" rows="10">{{pages.description}}</textarea>
+    <textarea id="text-area">{{pages.description}}</textarea>
   </div>
-  
 </div>

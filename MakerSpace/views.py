@@ -27,9 +27,16 @@ categories = Category.objects.all()
 promptBase = PromptBase.objects.all().values()
 SIZE = [size for size in range(128,1025,128)]
 
-###################
-# 創作頁面
-# #################
+
+def ChangeLocation(request):
+    #- 取得ID跟頁碼(e.g. 3
+    bookID = Book.objects.get(id=int(request.POST.get('id')))
+    page = Image.objects.filter(book=bookID,page_number=request.POST.get('page'))
+    page.update(img_location=request.POST.get('location'))
+    return  JsonResponse({'status': True})
+###########
+# 創作頁面##
+# ###########
 @login_required(login_url='login')
 @csrf_exempt
 def makerspace(request,*args,**kwargs):
@@ -38,14 +45,12 @@ def makerspace(request,*args,**kwargs):
         pages = Image.objects.filter(book=bookID).order_by('page_number') 
         count = sum(1 for i in pages)
         if not(count):
-            styleID = stylebase.objects.get(styleID=request.POST['style_Id']) #取得繪本ID
+            styleID = Stylebase.objects.get(styleID=request.POST['style_Id']) #取得繪本ID
             steps = styleID.steps
-            Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=steps)
-            print('ok')
+            Image.objects.create(page_number=0,book=bookID,seeds=random.randint(1,4294967295),steps=steps,img_location="area-left")
         return redirect(f'{bookID.id}/')
 
     bookID = Book.objects.get(id=int(kwargs['book_id']))
-    print(bookID)
     pages = Image.objects.filter(book=bookID).order_by('page_number') 
     context = {
         'book':bookID,
@@ -62,12 +67,11 @@ def makerspace(request,*args,**kwargs):
 ################### 
 # 顯示頁面 
 # ##################
-@login_required(login_url='login')
 @csrf_exempt
 def showpage(request):
     bookID = Book.objects.get(id=int(request.POST.get('id')))    #原頁面資訊儲存
     oldpage =  Image.objects.filter(book=bookID,page_number=request.POST.get('old_page_num'))
-    oldpage.update(description=request.POST.get('old_page_text'))
+    oldpage.update(description=request.POST.get('old_page_text'),img_location=request.POST.get('old_page_cover'))
     #新頁面資訊顯示
     pages = Image.objects.get(book=bookID,page_number=request.POST.get('page'))
     setblock1 = loader.get_template('makerspace/main.html')
@@ -84,7 +88,6 @@ def showpage(request):
 ###################
 # 移除功能
 # ##################
-@login_required(login_url='login')
 @csrf_exempt
 def remove(request):
     #- 取得ID跟頁碼(e.g. 3
@@ -101,34 +104,29 @@ def remove(request):
     # item.update(page_number=int(page))
     pages = Image.objects.filter(book=bookID).order_by('page_number') #重新整理頁面
     templates = loader.get_template('makerspace/loadpages.html')
-    context= {'pages':pages}
+    context= {'pages':pages,'book':bookID}
     return HttpResponse(templates.render(context))       
 
 ###################
 # 插入功能
 # ##################
-@login_required(login_url='login')
 @csrf_exempt
 def insert(request):
     bookID = Book.objects.get(id=int(request.POST.get('id')))
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     new_page = sum(1 for i in pages)
     seed = Image.objects.get(book=bookID,page_number=new_page-1).seeds
-    Image.objects.create(page_number=new_page,book=bookID,seeds=seed,steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!")
+    Image.objects.create(page_number=new_page,book=bookID,seeds=seed,steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!",img_location="area-top")
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     #重新設定幾個網頁
     templates = loader.get_template('makerspace/loadpages.html')
-    context= {'pages':pages}
+    context= {'pages':pages,'book':bookID}
     return HttpResponse(templates.render(context))
-
-
 ###################
 # 判斷是否為ajax事件
 # ##################
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-
-
 ###################
 # 生圖
 # ##################
@@ -183,7 +181,7 @@ def is_ajax(request):
 ########
 #新版本
 #######
-@login_required(login_url='login')
+# @login_required(login_url='login')
 @csrf_exempt
 def generate(request):
     #取得bookID所綁定的style prompt
@@ -199,7 +197,6 @@ def generate(request):
         # height = int(request.POST['height'])
         # width =  int(request.POST['width'])
         print(prompt,scale,seed,steps,sep='\n')
-
     # device = "cuda" if torch.cuda.is_available() else 'cpu'
     # model_id = "stabilityai/stable-diffusion-2"
     # auth_token = "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"
@@ -244,10 +241,6 @@ def generate(request):
     # return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
 
 
-
-
-
-
 ################### 
 # 風格選擇頁面
 # ##################
@@ -257,7 +250,7 @@ def style_choose(request,*args,**kwargs):
     book = kwargs['book_id']
 
     #導入風格資料庫
-    style = stylebase.objects.all()
+    style =Stylebase.objects.all()
     context = {'stylebase': style,'book_id':book}
     #若選擇後post接收風格的設定
     #取得picturebookID、style prompt後重新導向至繪本建立頁面

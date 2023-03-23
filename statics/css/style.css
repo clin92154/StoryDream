@@ -123,52 +123,14 @@ body {
 }
 
 
-/* 圖像區 */
-
-#page-cover {
-    width: 60vw;
-    height: 80vh;
-    background-color: white;
-    border-radius: 15px;
-    /* box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 30px; */
-    justify-content: flex-start;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
-
-#page-text {
-    border-bottom-right-radius: 15px;
-    border-top-right-radius: 15px;
-    width: 50%;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-    order: 0;
-    align-self: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#page-text>#text-area {
-    box-sizing: border-box;
-    border: 2px dashed rgb(92, 89, 89);
-    resize: none;
-    width: 80%;
-    height: 80%;
-}
-
-#page-image {
-    width: 70%;
-    height: 100%;
-    object-fit: contain;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    order: 0;
-    align-self: auto;
-}
+/* #page-text>#text-area:hover {
+    border: 2px dashed rgb(0, 0, 0);
+    background-color: grey;
+    color: white;
+    opacity: 40%;
+    content: '設計一個有趣的旁白';
+    font-size: .8em;
+} */
 
 .btn-style-choose {
     border: none;
