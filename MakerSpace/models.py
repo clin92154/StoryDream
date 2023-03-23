@@ -45,7 +45,7 @@ class Stylebase(models.Model):
     name = models.CharField(max_length=50)
     styleID = models.CharField(max_length=20)
     stylePrompt = models.CharField(max_length=255)
-    style_preview = models.TextField(blank=True,null=True)
+    style_preview = models.ImageField(upload_to='image/', blank=False, null=False)
     scale = models.IntegerField(default=7)
     steps = models.IntegerField(default=50)
     def __str__(self):
