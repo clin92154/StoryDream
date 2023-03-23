@@ -8,9 +8,9 @@ from django import template
 from django.template import loader ,Context
 # Create your views here.
 
-##
-# 顯示頁面
-##
+###########
+# 顯示頁面 #
+###########
 
 @csrf_exempt
 @login_required(login_url='login')
@@ -25,9 +25,9 @@ def showpage(request):
     }
     return HttpResponse(setblock1.render(c))
 
-##
-# 顯示繪本
-##
+###########
+# 顯示繪本 #
+###########
 @login_required(login_url='login')
 def showStory(request , *args, **kwargs):
     #取得已經公開繪本的ID
@@ -40,10 +40,9 @@ def showStory(request , *args, **kwargs):
     }
     return render(request,'storyhall/story_view.html' , content)
 
-
-##
-# 瀏覽
-##
+########
+# 瀏覽 #
+########
 @login_required(login_url='login')
 def index(request):
     #取得已經公開繪本的ID、作者資訊
@@ -52,7 +51,6 @@ def index(request):
     book_cover =  Image.objects.all()
     content = {
         'books':book,
-        'book_cover':book_cover
     }
     
     return render(request,'storyhall/index.html',content)

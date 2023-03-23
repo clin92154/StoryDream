@@ -63,9 +63,16 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.id)
-    
+
     def get_absolute_url(self):
         return reverse("book_id", kwargs={"id": self.name})
+    
+    def getCover(self):
+        coverPage = Image.objects.filter(book=self).first()
+        if coverPage:
+            return coverPage.image
+        # 否则返回None
+        return None
 
 
 # 繪本圖片
