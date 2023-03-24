@@ -11,7 +11,6 @@ from django.template import loader ,Context
 ###########
 # 顯示頁面 #
 ###########
-
 @csrf_exempt
 @login_required(login_url='login')
 def showpage(request):

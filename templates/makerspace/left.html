@@ -134,7 +134,7 @@
                 name="seed"
                 min="1"
                 step="1"
-                value="{{pages.page_number}}"
+                value="{{pages.seeds}}"
                 class="form-control"
               />
               <div class="invalid-feedback">請輸入seed</div>
@@ -225,79 +225,4 @@
     let page_cover = document.getElementById("page-cover");
     page_cover.className = location_id[num];
   }
-</script>
-  {% comment %} function left() {
-    let left = document.querySelector("#page-cover");
-    let text = document.querySelector("#page-text");
-    let text_area = document.querySelector("#page-text>#text-area");
-    let image = document.querySelector("#page-image");
-    let btn_left = document.querySelector(".btn-left");
-    let btn_right = document.querySelector(".btn-right");
-    let btn_up = document.querySelector(".btn-up");
-    let btn_down = document.querySelector(".btn-down");
-
-    text.style = "width: 50%; height: 100%;";
-    left.style = "justify-content: flex-end; flex-direction: row-reverse;";
-    text_area.style = "padding: 15%;";
-    image.style = "width: 70%; height: 100%;";
-    btn_left.classList.add("active");
-    btn_right.classList.remove("active");
-    btn_up.classList.remove("active");
-    btn_down.classList.remove("active");
-  }
-
-  function right() {
-    let right = document.querySelector("#page-cover");
-    right.style = "justify-content: flex-start; flex-direction: row;";
-    let text = document.querySelector("#page-text");
-    text.style = "width: 30%; height: 100%;";
-    let text_area = document.querySelector("#page-text>#text-area");
-    text_area.style = "padding: 15%;";
-    let image = document.querySelector("#page-image");
-    image.style = "width: 70%; height: 100%;";
-    let btn_left = document.querySelector(".btn-left");
-    btn_left.classList.remove("active");
-    let btn_right = document.querySelector(".btn-right");
-    btn_right.classList.add("active");
-    let btn_up = document.querySelector(".btn-up");
-    btn_up.classList.remove("active");
-    let btn_down = document.querySelector(".btn-down");
-    btn_down.classList.remove("active");
-  }
-  function up() {
-    let up = document.querySelector("#page-cover");
-    up.style = "justify-content: flex-start; flex-direction: column;";
-    let text = document.querySelector("#page-text");
-    text.style = "width: 100%; height: 30%;";
-    let text_area = document.querySelector("#page-text>#text-area");
-    text_area.style = "padding: 5%;";
-    let image = document.querySelector("#page-image");
-    image.style = "width: 100%; height: 70%;";
-    let btn_left = document.querySelector(".btn-left");
-    btn_left.classList.remove("active");
-    let btn_right = document.querySelector(".btn-right");
-    btn_right.classList.remove("active");
-    let btn_up = document.querySelector(".btn-up");
-    btn_up.classList.add("active");
-    let btn_down = document.querySelector(".btn-down");
-    btn_down.classList.remove("active");
-  }
-  function down() {
-    let down = document.querySelector("#page-cover");
-    down.style = "justify-content: flex-end; flex-direction: column-reverse;";
-    let text = document.querySelector("#page-text");
-    text.style = "width: 100%; height: 30%;";
-    let text_area = document.querySelector("#page-text>#text-area");
-    text_area.style = "padding: 5%;";
-    let image = document.querySelector("#page-image");
-    image.style = "width: 100%; height: 70%;";
-    let btn_left = document.querySelector(".btn-left");
-    btn_left.classList.remove("active");
-    let btn_right = document.querySelector(".btn-right");
-    btn_right.classList.remove("active");
-    let btn_up = document.querySelector(".btn-up");
-    btn_up.classList.remove("active");
-    let btn_down = document.querySelector(".btn-down");
-    btn_down.classList.add("active");
-  } {% endcomment %}
 </script>

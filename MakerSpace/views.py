@@ -20,8 +20,8 @@ from .models import *
 #給隨機seed
 import random , os 
 import replicate
-
-
+#google translate
+from google_trans_new import google_translator  
 #類別資料庫及關鍵字資料庫導入
 categories = Category.objects.all()
 promptBase = PromptBase.objects.all().values()
@@ -42,6 +42,8 @@ def ChangeLocation(request):
 def makerspace(request,*args,**kwargs):
     if request.method == "POST":
         bookID = Book.objects.get(id=int(request.POST['book_Id'])) #session['bookID']
+        bookID.sid = request.POST["style_Id"]
+        bookID.save()
         pages = Image.objects.filter(book=bookID).order_by('page_number') 
         count = sum(1 for i in pages)
         if not(count):
@@ -69,6 +71,7 @@ def makerspace(request,*args,**kwargs):
 # ##################
 @csrf_exempt
 def showpage(request):
+    
     bookID = Book.objects.get(id=int(request.POST.get('id')))    #原頁面資訊儲存
     oldpage =  Image.objects.filter(book=bookID,page_number=request.POST.get('old_page_num'))
     oldpage.update(description=request.POST.get('old_page_text'),img_location=request.POST.get('old_page_cover'))
@@ -186,16 +189,20 @@ def is_ajax(request):
 def generate(request):
     #取得bookID所綁定的style prompt
     print(request.POST['bid'])
+    # translator = google_translator()
     bookID = Book.objects.get(id=request.POST['bid']) #session['bookID']
     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
     if  is_ajax(request=request) and request.method == "POST":
         #只要生成圖像參數表單即可
-        prompt = request.POST['prompt'] #加上style
+        prompt = str(request.POST['prompt']) #加上style
+        
         scale = float(request.POST['scale'])
         seed = int(request.POST['seed'])
         steps = int(request.POST['steps'])
         # height = int(request.POST['height'])
         # width =  int(request.POST['width'])
+        # results = translator.translate(prompt,lang_tgt='en')
+        # prompt = results
         print(prompt,scale,seed,steps,sep='\n')
     # device = "cuda" if torch.cuda.is_available() else 'cpu'
     # model_id = "stabilityai/stable-diffusion-2"
@@ -218,8 +225,9 @@ def generate(request):
     model = replicate.models.get("stability-ai/stable-diffusion")
     version = model.versions.get("db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf")
     # https://replicate.com/stability-ai/stable-diffusion/versions/db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf#input
+    style = Stylebase.objects.get(styleID=str(bookID.sid))
     inputs = {
-        'prompt': prompt ,
+        'prompt': prompt + style.stylePrompt ,
         'image_dimensions': "768x768",
         'num_outputs': 1,
         'num_inference_steps': steps,
@@ -265,6 +273,6 @@ def book_create(request):
     else:
         uid = 'guest'
 
-
+    
     book = Book.objects.create(author=uid)
     return HttpResponse(f'makerspace/style_choose/{book.id}/') #將繪本ID傳送至頁面

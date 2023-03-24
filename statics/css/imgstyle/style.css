@@ -92,6 +92,16 @@ div#page-image {
   order: 0;
 }
 
+#page_text {
+  height: 80%;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  resize: none;
+  padding: 15px;
+  border: 0px;
+}
+
 #text-area {
   height: 80%;
   width: 80%;

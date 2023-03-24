@@ -3,7 +3,6 @@ from django import forms
 from django.urls import reverse
 # Create your models here.
 
-
 # class MakerSpace(models.Model):
 #     prompt = models.CharField(max_length=255)  #prompt
 
@@ -40,16 +39,21 @@ class PromptBase(models.Model):
 
     def getCategory(self):
         return self.category
-    
+
+def get_img_name(instance, filename):
+    result = 'style/%s' % instance.name
+    return result  
+
 class Stylebase(models.Model):
     name = models.CharField(max_length=50)
     styleID = models.CharField(max_length=20)
     stylePrompt = models.CharField(max_length=255)
-    style_preview = models.ImageField(upload_to='image/', blank=False, null=False)
+    style_preview = models.ImageField(upload_to=get_img_name, blank=False, null=False)
     scale = models.IntegerField(default=7)
     steps = models.IntegerField(default=50)
     def __str__(self):
         return self.name
+    
 
 # 書本
 class Book(models.Model):
@@ -60,6 +64,7 @@ class Book(models.Model):
     book_category = models.CharField(max_length=50,null=True)
     published_date = models.DateField(auto_now=True)
     public_status = models.BooleanField(default=False)
+    sid = models.CharField(max_length=20,blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
@@ -71,7 +76,7 @@ class Book(models.Model):
         coverPage = Image.objects.filter(book=self).first()
         if coverPage:
             return coverPage.image
-        # 否则返回None
+        # else 返回None
         return None
 
 

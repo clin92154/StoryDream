@@ -48,7 +48,9 @@
 
 <!--顯示封面-->
 
-<script></script>
+<script>
+  showpage(0);
+</script>
 
 <script>
   //初始化設定
@@ -76,7 +78,9 @@
         dataType: "html",
         //若成功-> localStroge
         success: function (response) {
-          $("#page-cover").html(response);
+          $("#page-cover").replaceWith(response);
+          let page_text = document.getElementById("text-area");
+          {% comment %} page_text.id = "page_text"; {% endcomment %}
         },
       });
     });
