@@ -21,7 +21,7 @@
 <script type="text/javascript">
     let prompt = [];
     function changeColor(target) {
-
+      let promptArea = document.querySelector("#promptArea");
       let keyword = "";
       let index = prompt.indexOf(target.value);
       if (target.id==0 && index == -1) {
@@ -47,11 +47,14 @@
         target.value = target.value.replace("((","").replace("))","");
         target.id = 0;
       }
-
-      let promptArea = document.querySelector("#promptArea");
-      promptArea.innerText = prompt.join(',');
-
+      promptArea.value = prompt.join(',');
       // console.log(prompt+target.id+index);
+    }
+
+    function updatePrompt(){
+      txt = promptArea.value
+      prompt = txt.split(',');
+      promptArea.value = prompt.join(',');
     }
 
 

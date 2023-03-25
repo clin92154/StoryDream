@@ -57,8 +57,8 @@
               </button>
               <button
                 id="area-left"
-                {% if  pages.img_location == 'area-left'%}
-                class="btn btn-outline-secondary btn-left active"
+                {% if  pages.img_location == 'area-left' %}
+                  class="btn btn-outline-secondary btn-left active"
                 {% else %}
                   class="btn btn-outline-secondary btn-left"
                 {% endif %}  
@@ -182,8 +182,7 @@
             >
               {% for category in categories %}
               <button
-                class="btn btn-outline-dark radius"
-                style="margin: 0.2rem; padding: 0.1rem; width: 80px"
+              
                 type="button"
                 onclick="showKeyword(this)"
                 value="{{category.id}}"
@@ -203,7 +202,7 @@
   <!-- card -->
 
   <div class="col-md-12 mt-10">
-    <textarea id="promptArea" name="prompt" class="form-control">
+    <textarea id="promptArea" name="prompt" class="form-control" onkeyup="updatePrompt()" >
 {{pages.prompt}}</textarea
     >
   </div>

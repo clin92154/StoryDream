@@ -1,9 +1,22 @@
 @charset "UTF-8";
 /* 圖像區 */
-div#page-image {
+#page-cover {
+  width: 100%;
+  height: 80vw;
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 30px;
+}
+#page-cover div#page-image {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .area-top {
@@ -72,17 +85,6 @@ div#page-image {
 .area-right #page-text {
   height: 100%;
   width: 40%;
-}
-
-#page-cover {
-  width: 100%;
-  height: 80vh;
-  background-color: rgb(255, 255, 255);
-  border-radius: 15px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 30px;
 }
 
 #page-text {
