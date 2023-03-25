@@ -54,6 +54,7 @@
     function updatePrompt(){
       txt = promptArea.value
       prompt = txt.split(',');
+      prompt = prompt.filter(el => el);
       promptArea.value = prompt.join(',');
     }
 
