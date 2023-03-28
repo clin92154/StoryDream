@@ -1,0 +1,18 @@
+<div
+  id="page-cover"
+  {% if 'pages.img_location' == "area-top" %}
+  class="area-top"
+  {% else %}
+  class="{{pages.img_location}}"
+  {% endif %}
+  style = "max-height:60vh;"
+>
+  <div
+    id="page-image"
+    style="background-image: url('data:image/png;base64,{{pages.image}}');"
+  ></div>
+
+  <div id="page-text">
+    <textarea id="ta-readonly" readonly>{{pages.description}}</textarea>
+  </div>
+</div>

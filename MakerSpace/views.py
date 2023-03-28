@@ -21,7 +21,7 @@ from .models import *
 import random , os 
 import replicate
 #google translate
-from google_trans_new import google_translator  
+# from google_trans_new import google_translator  
 #類別資料庫及關鍵字資料庫導入
 categories = Category.objects.all()
 promptBase = PromptBase.objects.all().values()
@@ -125,63 +125,13 @@ def insert(request):
     templates = loader.get_template('makerspace/loadpages.html')
     context= {'pages':pages,'book':bookID}
     return HttpResponse(templates.render(context))
-###################
-# 判斷是否為ajax事件
-# ##################
+
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-###################
-# 生圖
-# ##################
-# @login_required(login_url='login')
-# @csrf_exempt
-# def generate(request):
-#     #取得bookID所綁定的style prompt
-#     print(request.POST['bid'])
-#     bookID = Book.objects.get(id=request.POST['bid']) #session['bookID']
-#     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
-#     if  is_ajax(request=request) and request.method == "POST":
-#         #只要生成圖像參數表單即可
-#         prompt = request.POST['prompt'] #加上style
-#         scale = float(request.POST['scale'])
-#         seed = int(request.POST['seed'])
-#         steps = int(request.POST['steps'])
-#         height = int(request.POST['height'])
-#         width =  int(request.POST['width'])
-#         print(prompt,scale,seed,steps,sep='\n')
-
-#     device = "cuda" if torch.cuda.is_available() else 'cpu'
-#     model_id = "stabilityai/stable-diffusion-2"
-#     auth_token = "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"
-
-#     scheduler = EulerDiscreteScheduler.from_pretrained(
-#         model_id, subfolder="scheduler")
-#     pipe = DiffusionPipeline.from_pretrained(
-#         model_id, use_auth_token=auth_token, scheduler=scheduler).to(device)
-#     # use_auth_token = auth_token
-#     # with autocast(device):
-
-#     """
-#     seed : 能控制圖片生成的多樣性，
-#     step : 次數越多，文本推理步驟就越多
-#     SCALE:
-#     """
-
-#     generator = torch.Generator(device).manual_seed(seed)  # seed設定，seed越高
-#     image = pipe(prompt,  height=height, width=width, guidance_scale=scale,
-#                  num_inference_steps=steps, generator=generator).images[0]
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
-    # #取得目前繪本id資料夾，若沒有則建立並依據編號存到該路徑中
-    # # image.save(f'media/image/tmp.png')
-    # # PATH = settings.MEDIA_ROOT + '/image/tmp.png'
-    # buffer = BytesIO()
-    # image.save(buffer, format="PNG")
-    # image_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-    # pages.update(prompt=prompt,image=image_str, height=height, width=width,seeds=seed,steps=steps, scale= scale)
-    # return JsonResponse({'image_str': image_str})
-    # # return HttpResponse(f'<img src="data:image/png;base64,{image_str}"/>')
-########
+#######
 #新版本
 #######
 # @login_required(login_url='login')
@@ -199,20 +149,9 @@ def generate(request):
         scale = float(request.POST['scale'])
         seed = int(request.POST['seed'])
         steps = int(request.POST['steps'])
-        # height = int(request.POST['height'])
-        # width =  int(request.POST['width'])
-        # results = translator.translate(prompt,lang_tgt='en')
-        # prompt = results
+
         print(prompt,scale,seed,steps,sep='\n')
-    # device = "cuda" if torch.cuda.is_available() else 'cpu'
-    # model_id = "stabilityai/stable-diffusion-2"
-    # auth_token = "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"
-    # scheduler = EulerDiscreteScheduler.from_pretrained(
-    #     model_id, subfolder="scheduler")
-    # pipe = DiffusionPipeline.from_pretrained(
-    #     model_id, use_auth_token=auth_token, scheduler=scheduler).to(device)
-    # use_auth_token = auth_token
-    # with autocast(device):
+
     """
     seed : 能控制圖片生成的多樣性，
     step : 次數越多，文本推理步驟就越多
@@ -253,6 +192,7 @@ def generate(request):
 # 風格選擇頁面
 # ##################
 #建立繪本ID-取得會員資料等
+
 def style_choose(request,*args,**kwargs):
     #取得繪本ID
     book = kwargs['book_id']
@@ -265,14 +205,18 @@ def style_choose(request,*args,**kwargs):
     return render(request,'stylebase/style_choose.html',context) #將繪本ID傳送至頁面
 
 #建立繪本ID-取得會員資料等
-@login_required(login_url='login')
 @csrf_exempt
-def book_create(request):
-    if request.POST.get("id"):
-        uid = request.POST.get("id")
-    else:
-        uid = 'guest'
+def book_create(request,*args,**kwargs):
+    print(request.COOKIES.get("uid"))
+    print(request.COOKIES.get('is_login'))
+    if request.COOKIES.get('is_login'):
+        userid = Userinfo.objects.get(UserID=request.COOKIES.get("uid"))
+        book = Book.objects.create(author=userid,userinfo=userid)
+        return HttpResponse(f'makerspace/style_choose/{book.id}/') #將繪本ID傳送至頁面
+    return HttpResponse('account/login')
+    # else:
+    #     uid = Userinfo.objects.get(UserID='guest')
 
-    
-    book = Book.objects.create(author=uid)
-    return HttpResponse(f'makerspace/style_choose/{book.id}/') #將繪本ID傳送至頁面
+
+
+

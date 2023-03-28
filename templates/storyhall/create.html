@@ -1,22 +1,18 @@
 <script>
   function create() {
     let url = new URL(location.href);
-    let get_user_id = url.searchParams.get("id");
-    console.log(get_user_id);
     $(document).ready(function () {
       $.ajaxSetup({
         data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
       });
       $.ajax({
-        url: "makerspace/book_create/", // 要傳送的頁面
+        url: "{% url 'book_create' %}", // 要傳送的頁面
         method: "POST", // 使用 POST 方法傳送請求
         async: false,
-        data: {
-          id: get_user_id,
-        },
         DataType: "HTML",
         success: function (response) {
-          $(window).attr("location", response);
+          url.pathname = response;
+          $(window).attr("location", url.pathname);
         },
       });
     });

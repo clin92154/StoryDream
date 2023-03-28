@@ -1,0 +1,17 @@
+.title_inform {
+    background-color: #58a5d4;
+}
+
+
+.text1 {
+  text-align: center;
+  line-height: 200px;/*與包著的區塊設定同高度即可*/
+}
+
+.circle {
+    background-color: #87def7;
+    width: 200px;
+    height: 250px;
+    border-radius: 20%;
+  }
+

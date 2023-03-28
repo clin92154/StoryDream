@@ -1,0 +1,230 @@
+<div class="col-12 accordion" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseOne"
+        aria-expanded="false"
+        aria-controls="flush-collapseOne"
+      >
+        進階功能
+      </button>
+    </h2>
+    <div
+      id="flush-collapseOne"
+      class="accordion-collapse collapse"
+      aria-labelledby="flush-headingOne"
+      data-bs-parent="#accordionFlushExample"
+    >
+      <div class="container">
+        <div class="row">
+          {% load static %}
+          <div class="row mt-10">
+            <label class="col-md-2">擺放位置</label>
+            <div class="col-md-10">
+              <button
+                id="area-top"
+                {% if  pages.img_location == 'area-top'%}
+                  class="btn btn-outline-secondary btn-up active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-up"
+                {% endif %}
+                class="btn btn-outline-secondary btn-up active"
+                type="button"
+                onclick="Changelocation(0)"
+              >
+                <img
+                  src="{% static 'image/image-up.png' %}"
+                  style="width: 25px; height: 25px"
+                />
+              </button>
+              <button
+                id="area-bottom"
+                {% if  pages.img_location == 'area-bottom'%}
+                class="btn btn-outline-secondary btn-down active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-down"
+                {% endif %}                
+                type="button"
+                onclick="Changelocation(1)"
+              >
+                <img
+                  src="{% static 'image/image-down.png' %}"
+                  style="width: 25px; height: 25px"
+                />
+              </button>
+              <button
+                id="area-left"
+                {% if  pages.img_location == 'area-left' %}
+                  class="btn btn-outline-secondary btn-left active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-left"
+                {% endif %}  
+                class="btn btn-outline-secondary btn-left"
+                type="button"
+                onclick="Changelocation(2)"
+              >
+                <img
+                  src="{% static 'image/image-left.png' %}"
+                  style="width: 25px; height: 25px"
+                />
+              </button>
+              <button
+                id="area-right"
+                {% if  pages.img_location == 'area-right'%}
+                class="btn btn-outline-secondary btn-right active"
+                {% else %}
+                  class="btn btn-outline-secondary btn-right"
+                {% endif %}  
+                type="button"
+                onclick="Changelocation(3)"
+              >
+                <img
+                  src="{% static 'image/image-right.png' %}"
+                  style="width: 25px; height: 25px"
+                />
+              </button>
+            </div>
+          </div>
+          <!-- row -->
+
+          <div class="row mt-10">
+            <label class="col-md-2 col-form-label">steps</label>
+            <div class="col-md-10">
+              <input
+                id="steps"
+                type="number"
+                min="5"
+                max="500"
+                name="steps"
+                class="form-control"
+                value="{{pages.steps}}"
+              />
+              <div class="invalid-feedback">請輸入steps</div>
+            </div>
+          </div>
+          <!-- column -->
+
+          <div class="row mt-10">
+            <label class="col-md-2 col-form-label">scale</label>
+            <div class="col-md-10">
+              <input
+                id="scale"
+                type="number"
+                min="1"
+                max="20"
+                name="scale"
+                step="0.5"
+                value="{{pages.scale}}"
+                class="form-control"
+              />
+              <div class="invalid-feedback">請輸入scale</div>
+            </div>
+          </div>
+          <!-- column -->
+
+          <div class="row mt-10 mb-10">
+            <label class="col-md-2 col-form-label">seed</label>
+            <div class="col-md-10">
+              <input
+                id="seed"
+                type="number"
+                name="seed"
+                min="1"
+                step="1"
+                value="{{pages.seeds}}"
+                class="form-control"
+              />
+              <div class="invalid-feedback">請輸入seed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 accordion mt-10" id="accordionFlushExample">
+  <!-- prompt -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseTwo"
+        aria-expanded="false"
+        aria-controls="flush-collapseTwo"
+      >
+        關鍵字資料庫
+      </button>
+    </h2>
+    <div
+      id="flush-collapseTwo"
+      class="accordion-collapse collapse show"
+      aria-labelledby="flush-headingTwo"
+      data-bs-parent="#accordionFlushExample"
+    >
+      <div class="container" style="padding: 0px">
+        <div class="row" style="margin: 0px">
+          <div class="col-md-12" style="padding: 0px">
+            <div
+              id="promptbase"
+              class="btn-box pre-scrollable"
+              style="
+                overflow-x: hidden;
+                overflow-y: auto;
+                display: flex;
+                flex-wrap: wrap;
+                padding: 0.5rem;
+              "
+            >
+              {% for category in categories %}
+              <button
+              
+                type="button"
+                onclick="showKeyword(this)"
+                value="{{category.id}}"
+              >
+                {{category.name}}
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </div>
+    <!-- card body -->
+  </div>
+  <!-- card -->
+
+  <div class="col-md-12 mt-10">
+    <textarea id="promptArea" name="prompt" class="form-control" onkeyup="updatePrompt()" >
+{{pages.prompt}}</textarea
+    >
+  </div>
+
+  <div class="d-grid gap-2 d-md-block text-center mt-10 mb-10">
+    <button class="btn btn-outline-success" type="submit">產生圖片</button>
+    <button class="btn btn-outline-danger" type="reset">清除表單</button>
+  </div>
+</div>
+
+<script>
+  function Changelocation(num) {
+    let location_id = ["area-top", "area-bottom", "area-left", "area-right"];
+    for (let n = 0; n < 4; n++) {
+      document.getElementById(location_id[n]).classList.remove("active");
+    }
+    let btn = document.getElementById(location_id[num]);
+    btn.classList.add("active");
+    let page_cover = document.getElementById("page-cover");
+    page_cover.className = location_id[num];
+  }
+</script>
+
+
+

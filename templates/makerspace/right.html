@@ -5,6 +5,7 @@
   {% else %}
   class="{{pages.img_location}}"
   {% endif %}
+  style = "max-height:60vh;"
 >
   <div
     id="page-image"
@@ -12,6 +13,6 @@
   ></div>
 
   <div id="page-text">
-    <textarea id="text-area">{{pages.description}}</textarea>
+    <textarea id="text-area" placeholder="寫下你的故事吧!">{{pages.description}}</textarea>
   </div>
 </div>

@@ -17,7 +17,7 @@ def showpage(request):
     bookID = Book.objects.get(id=int(request.POST.get('id'))) 
     #新頁面資訊顯示
     pages = Image.objects.get(book=bookID,page_number=request.POST.get('page'))
-    setblock1 = loader.get_template('makerspace/right.html')
+    setblock1 = loader.get_template('storyhall/showpage.html')
     c ={
         'book':bookID,
         'pages':pages,
@@ -42,12 +42,12 @@ def showStory(request , *args, **kwargs):
 ########
 # 瀏覽 #
 ########
-@login_required(login_url='login')
 def index(request):
     #取得已經公開繪本的ID、作者資訊
-    username = request.GET.get("id")
+    print(request.COOKIES.get("uid"))
+    print(request.COOKIES.get('is_login'))
     book = Book.objects.all()
-    book_cover =  Image.objects.all()
+    # book_cover =  Image.objects.all()
     content = {
         'books':book,
     }

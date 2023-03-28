@@ -1,12 +1,48 @@
 /* 圖像區 */
 
+#page-text {
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+}
+
+#text-area {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 150%;
+  font-weight: 400;
+  resize: none;
+  position: relative;
+  border: 1px dashed #c0bcbcc5;
+}
+
+#text-area:hover,
+#text-area:focus {
+  outline: none;
+  border: 1px dashed rgba(94, 92, 92, 0.771);
+}
+
+#ta-readonly {
+  resize: none;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 150%;
+  font-weight: 400;
+  border: 0px;
+  outline: none;
+}
+#ta-readonly:hover,
+#ta-readonly:focus {
+  outline: none;
+}
+
 #page-cover {
   width: 100%;
   height: 80vw;
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
-  justify-content: flex-start;
-  align-items: flex-start;
   flex-wrap: nowrap;
   box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 30px;
   div#page-image {
@@ -19,19 +55,25 @@
   }
 }
 
+.area-bottom,
+.area-top {
+  div#page-image {
+    object-fit: fill;
+    width: 100%;
+    height: 90%;
+  }
+  #page-text {
+    width: 100%;
+    height: 30%;
+  }
+}
+
 .area-top {
   display: flex;
   flex-direction: column;
   div#page-image {
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
-    object-fit: fill;
-    width: 100%;
-    height: 60%;
-  }
-  #page-text {
-    width: 100%;
-    height: 40%;
   }
 }
 
@@ -41,13 +83,19 @@
   div#page-image {
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
+  }
+}
+
+.area-left,
+.area-right {
+  div#page-image {
     object-fit: fill;
-    width: 100%;
-    height: 60%;
+    width: 66%;
+    height: 100%;
   }
   #page-text {
-    width: 100%;
-    height: 40%;
+    height: 100%;
+    width: 34%;
   }
 }
 
@@ -57,13 +105,6 @@
   div#page-image {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    object-fit: fill;
-    width: 60%;
-    height: 100%;
-  }
-  #page-text {
-    height: 100%;
-    width: 40%;
   }
 }
 
@@ -73,46 +114,31 @@
   div#page-image {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    object-fit: fill;
-    width: 60%;
-    height: 100%;
-  }
-  #page-text {
-    height: 100%;
-    width: 40%;
   }
 }
 
-#page-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  order: 0;
-}
+// #page_text {
+//   height: 100%;
+//   width: 100%;
+//   justify-content: center;
+//   align-items: center;
+//   resize: none;
+//   border: 0px;
+// }
 
-#page_text {
-  height: 80%;
-  width: 80%;
-  justify-content: center;
-  align-items: center;
-  resize: none;
-  padding: 15px;
-  border: 0px;
-}
+// #text-area {
+//   height: 95%;
+//   width: 95%;
+//   justify-content: center;
+//   align-items: center;
+//   resize: none;
+//   padding: 5px;
+//   position: relative;
+//   border: 0px;
+// }
 
-#text-area {
-  height: 80%;
-  width: 80%;
-  justify-content: center;
-  align-items: center;
-  resize: none;
-  padding: 15px;
-  position: relative;
-  border: 0px;
-}
-
-#text-area:hover {
-  border: 0.2rem dashed black;
-  opacity: 30%;
-  background-color: gray;
-}
+// #text-area:hover {
+//   border: 0.2rem dashed black;
+//   opacity: 30%;
+//   background-color: rgb(214, 205, 205);
+// }

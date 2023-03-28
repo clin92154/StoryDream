@@ -16,6 +16,7 @@
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <link href="{% static 'css/style2.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/member.css' %}" rel="stylesheet" />
     <link href="{% static 'css/imgstyle/style.css' %}" rel="stylesheet" />
 
     <!-- fontawesome -->
@@ -51,19 +52,19 @@
                 class="nav-link"
                 aria-current="page"
                 href="{%url 'login'%}"
-                {%
+                {% comment %} {%
                 comment
                 %}
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 {%
                 endcomment
-                %}
+                %} {% endcomment %}
                 >登入</a
               >
             </li>
             <li class="nav-item"><a class="nav-link" href="#">故賞天地</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
+            <li class="nav-item"><a type="button" class="nav-link" >關於我們</a></li>
             <li class="nav-item">
               <a class="nav-link" href="#">與我們聯繫</a>
             </li>
@@ -98,5 +99,12 @@
       src="https://kit.fontawesome.com/2fa17175da.js"
       crossorigin="anonymous"
     ></script>
+    {% include 'storyhall/create.html' %}
+
+    
+
+
+
+
   </body>
 </html>

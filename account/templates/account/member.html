@@ -1,0 +1,111 @@
+{%extends 'base.html'%} {%block content%}
+
+<div class="title_inform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="table">
+    <tr>
+      <td width="200" rowspan="5" align="center"><p><img src="" width="128" height="128" /></p>
+      <p style="color:rgb(255, 255, 255) ">修改您的頭像</p></td>
+      
+      
+      <td width="80" align="left" class="tname" style="color:rgb(255, 255, 255) ">用戶名：{{UserID.UserID}}</td>
+      <td style="color:rgb(255, 255, 255) "></td>
+    </tr>
+    <tr>
+      <td align="left" class="tname"><a style="color:rgb(255, 255, 255) ">作品集:{{UserID.book_set.count}}</a></td>
+    </tr>
+    <tr>
+        <td align="left" class="tname"><a style="color:rgb(255, 255, 255) ">收藏:</a></td>
+    </tr>
+    <tr>
+        <td align="left" class="tname"><a style="color:rgb(255, 255, 255) ">評論:</a></td>
+    </tr>
+  </table>
+</div>
+
+
+<div class="container mt-10 mb-10">
+  <div class="row">
+    <div
+      class="col-9 pre-scrollable"
+      style="
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 500px;
+        scrollbar-gutter: stable;
+      "
+    >
+    {% csrf_token %}
+    <!-- {% if UserID  %}
+      {%for book in books %}
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col">
+          
+          <a id="card-a" href="storyview/<book_id>">
+            <div id="card-style" class="card h-100 circle">
+              <img
+                src="data:image/png;base64,{{book.getCover}}"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title text1">{{book.title}}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+       
+
+      </div>
+      {%endfor%}
+    {%endif%} -->
+  {% if UserID %}
+  {% for book in UserID.book_set.all %}
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    
+    <div class="col">
+    
+      <a id="card-a" href="{%url 'storyview' book_id=book.id%}">
+        <div id="card-style" class="card h-100 circle">
+          <img
+            src="data:image/png;base64,{{ book.getCover }}"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title text1">{{ book.title }}</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+   
+  </div>
+  {% endfor %}
+  {% endif %}
+    </div>
+    <div class="col-3">
+      <div class="card-header">
+        <p class="card-text">
+          自介
+        </p>
+      </div>
+      <div class="card">
+          <textarea class="card-body">
+            介紹你自己
+          </textarea>
+        
+      </div>
+      <button
+          type="button"
+          class="btn btn-primary"
+          style="float: right"
+          onclick="create()"
+        >
+          建立繪本
+        </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- 複製此區塊即可-->
+{% endblock%}

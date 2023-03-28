@@ -1,6 +1,8 @@
 from django.db import models
 from django import forms
 from django.urls import reverse
+
+# from account.models import Userinfo
 # Create your models here.
 
 # class MakerSpace(models.Model):
@@ -15,6 +17,9 @@ from django.urls import reverse
 # class Member_space(models.Model):
 #      picturebook_ID = models.CharField(max_length=255,null=False)
 #      bookshielf_ID = models.CharField(max_length=255,null=False)
+
+# Create your models here.
+
 
 ## 關鍵字種類
 class Category(models.Model):
@@ -54,6 +59,22 @@ class Stylebase(models.Model):
     def __str__(self):
         return self.name
     
+class Userinfo(models.Model):
+    
+    name = models.CharField(max_length=50,blank=True,null=True)
+    UserID = models.CharField(max_length=50,blank=True,null=True)
+    head_shot = models.ImageField(blank=True, null=True)
+
+    def __str__(self):
+        return self.UserID
+
+    def get_user_book(self):
+        book =  Book.objects.filter(author = self.userinfo)
+        return book
+    #get_user_book : datatype -> [book1,book2] -> return list
+        #for book in user.get_user_book:
+            # book.getCover book.id
+
 
 # 書本
 class Book(models.Model):
@@ -65,7 +86,8 @@ class Book(models.Model):
     published_date = models.DateField(auto_now=True)
     public_status = models.BooleanField(default=False)
     sid = models.CharField(max_length=20,blank=True, null=True)
-
+    # userinfos = models.ManyToManyField(Userinfo, related_name='books')
+    userinfo = models.ForeignKey(Userinfo, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)
 
@@ -96,3 +118,4 @@ class Image(models.Model):
     def __str__(self):
         return f"{self.page_number}"
     
+

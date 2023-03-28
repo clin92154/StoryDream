@@ -33,3 +33,13 @@ class styleBaseAdmin(admin.ModelAdmin):
     list_display = ['name','styleID','stylePrompt','scale','steps','style_preview']
 
 admin.site.register(Stylebase,styleBaseAdmin)
+
+class BookInline(admin.TabularInline):
+    model = Book
+    extra = 0
+
+class UserinfoAdmin(admin.ModelAdmin):
+    inlines = [BookInline]
+    list_display=['UserID','head_shot']
+
+admin.site.register(Userinfo, UserinfoAdmin)
