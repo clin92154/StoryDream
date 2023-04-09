@@ -9,12 +9,29 @@
 #card-a {
     color: #000;
     text-decoration: none;
+    transform: scale(1, 1);
+    transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
 }
 
 #card-style:hover {
-    border-width: medium;
-    border-color: blue;
     z-index: 300;
     color: #000;
     text-decoration: none;
+    transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+    -moz-transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -o-transform: scale(1.1, 1.1);
+}
+
+.mb-0 {
+    margin-bottom: 0px;
 }

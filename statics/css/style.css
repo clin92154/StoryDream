@@ -1,5 +1,21 @@
 body {
     background-color: #d9d9f3;
+    min-height: 100%;
+    display: grid;
+    /*使用grid排版*/
+    grid-template-rows: 0.5fr auto;
+    /*將上半部設置為一個單位，剩下的部分設為自動高度*/
+}
+
+html {
+    height: 100%;
+}
+
+.footer {
+    grid-row-start: 2;
+    /*欄位從第二條橫線開始*/
+    grid-row-end: 3;
+    /*欄位從第三條橫線結束*/
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
@@ -10,16 +26,6 @@ body {
 
 .white-block {
     background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-}
-
-.gray-block {
-    background-color: #f4f0e6;
     padding: 20px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -95,6 +101,14 @@ body {
     width: 100px;
 }
 
+.photo:hover {
+    transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+    -moz-transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -o-transform: scale(1.1, 1.1);
+}
+
 .fz-24 {
     font-size: 24px;
 }
@@ -124,12 +138,12 @@ body {
 
 
 /* #page-text>#text-area:hover {
-    border: 2px dashed rgb(0, 0, 0);
-    background-color: grey;
-    color: white;
-    opacity: 40%;
-    content: '設計一個有趣的旁白';
-    font-size: .8em;
+border: 2px dashed rgb(0, 0, 0);
+background-color: grey;
+color: white;
+opacity: 40%;
+content: '設計一個有趣的旁白';
+font-size: .8em;
 } */
 
 .btn-style-choose {
@@ -137,4 +151,33 @@ body {
     padding: 0px !important;
 }
 
+.photo {
+    display: inline-block;
+    position: relative;
+}
 
+.image-remove {
+    top: 5%;
+    right: -5%;
+    display: block;
+    position: absolute;
+}
+
+.fa-circle-xmark {
+    font-size: .5em!important;
+    line-height: 0em!important;
+}
+
+.photo {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    align-content: stretch;
+}
+
+.page-num {
+    flex-direction: column;
+    display: flex;
+    font-size: 18px;
+}

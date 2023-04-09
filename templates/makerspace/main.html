@@ -9,10 +9,13 @@
       >
         {% csrf_token %}
         <input type="hidden" id="bid" name="bid" value="{{book.id}}" />
-        
-          <p class="text-center fz-24">第 {{pages.page_number}} 頁</p>
-          <input id="page" type="hidden" name="page" value="{{pages.page_number}}" readonly="readonly" />
+        {% if pages.page_number == 0 %}
+        <p class="text-center fz-24">封面</p>
+        {% else %}
+        <p class="text-center fz-24">第 {{pages.page_number}} 頁</p>
+        {% endif %}
           
+        <input id="page" type="hidden" name="page" value="{{pages.page_number}}" readonly="readonly" />
           {% include 'makerspace/left.html'%}
       </form>
     </div>
@@ -21,35 +24,3 @@
     </div>
   </div>
 </div>
-
-
-{% comment %}
-<!--移除頁面功能-->
-<script>
-  //演算法
-  //1. 取得事件
-
-  function delete(num){
-    $(document).ready(function () {
-      $.ajaxSetup({
-        data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
-      });
-      $.ajax({
-        url: "delete/",
-        method: "POST",
-        data: {
-          id: "{{pages.first.book}}",
-          page: num, // 2. 取得ID、頁碼
-        }, // 將表單資料用打包起來送出去
-        dataType: "html",
-        success: function (response) {
-          //3. 執行delete function
-          let loadpages = response;
-          $("#loadpages").html(loadpages);
-          showpage(num);
-        },
-      });
-    });
-  }
-</script>
-{% endcomment %}

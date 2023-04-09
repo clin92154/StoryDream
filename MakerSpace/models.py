@@ -2,25 +2,6 @@ from django.db import models
 from django import forms
 from django.urls import reverse
 
-# from account.models import Userinfo
-# Create your models here.
-
-# class MakerSpace(models.Model):
-#     prompt = models.CharField(max_length=255)  #prompt
-
-# class Member(models.model):
-#     memberID 
-#     password 
-#     email = models.EmailField()
-
-
-# class Member_space(models.Model):
-#      picturebook_ID = models.CharField(max_length=255,null=False)
-#      bookshielf_ID = models.CharField(max_length=255,null=False)
-
-# Create your models here.
-
-
 ## 關鍵字種類
 class Category(models.Model):
     name = models.CharField(max_length=200,
@@ -46,7 +27,7 @@ class PromptBase(models.Model):
         return self.category
 
 def get_img_name(instance, filename):
-    result = 'style/%s' % instance.name
+    result = 'style/%s.png' % instance.name
     return result  
 
 class Stylebase(models.Model):
@@ -71,9 +52,7 @@ class Userinfo(models.Model):
     def get_user_book(self):
         book =  Book.objects.filter(author = self.userinfo)
         return book
-    #get_user_book : datatype -> [book1,book2] -> return list
-        #for book in user.get_user_book:
-            # book.getCover book.id
+
 
 
 # 書本
@@ -86,7 +65,6 @@ class Book(models.Model):
     published_date = models.DateField(auto_now=True)
     public_status = models.BooleanField(default=False)
     sid = models.CharField(max_length=20,blank=True, null=True)
-    # userinfos = models.ManyToManyField(Userinfo, related_name='books')
     userinfo = models.ForeignKey(Userinfo, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)
