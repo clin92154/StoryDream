@@ -1,10 +1,10 @@
 body {
-    background-color: #d9d9f3;
+    background-color: #EAFFD0;
     min-height: 100%;
     display: grid;
     /*使用grid排版*/
     grid-template-rows: 0.5fr auto;
-    /*將上半部設置為一個單位，剩下的部分設為自動高度*/
+    /*將上半部設置為一個單位，剩下的部分設為自動高度* d9d9f3/
 }
 
 html {
@@ -25,7 +25,7 @@ html {
 }
 
 .white-block {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     padding: 20px;
     border-radius: 10px;
     -webkit-border-radius: 10px;

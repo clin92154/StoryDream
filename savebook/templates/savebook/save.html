@@ -7,19 +7,12 @@
         <div class="row">
           <!--狀態列-->
           <div class="col-7">
-            <img
-              {%
-              comment
-              %}
-              name="cover_page"
-              {%
-              endcomment
-              %}
-              src="data:image/png;base64,{{cover_page.image}}"
-              class="img-fluid"
-              alt="..."
-            />
-            <div class="mb-3 mt-10">
+            {% if cover_page.image != none %}
+              <img name="cover_page" src="data:image/png;base64,{{cover_page.image}}" class="img-fluid" alt="..."/>
+            {% else %}            
+              <img src="https://fakeimg.pl/500x250/?text=none&font=lobster" class="mx-auto d-block img-fluid" alt="..." style="border-radius: 10px"/>
+            {% endif %}
+              <div class="mb-3 mt-10">
               <label for="exampleFormControlInput1" class="form-label"
                 >故事類別：</label
               >
@@ -71,7 +64,7 @@
       <div class="col-3 white-block ml-10">
         <p class="text-center fz-24">作者資訊</p>
         <img
-          src="https://fakeimg.pl/200x200/?text=200X200&font=lobster"
+          src="https://fakeimg.pl/200x200/?text={{book.author}}&font=lobster"
           class="mx-auto d-block img-fluid"
           alt="..."
           style="border-radius: 50%"
@@ -86,5 +79,6 @@
     </div>
   </div>
 </form>
+
 
 {% endblock%}

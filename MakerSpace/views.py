@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import requests
 import torch
 from diffusers import DiffusionPipeline, EulerDiscreteScheduler
-from django.http import JsonResponse ,HttpResponse
+from django.http import JsonResponse, HttpResponse
 
 from django.urls import resolve
 from deep_translator import GoogleTranslator
@@ -10,30 +10,38 @@ from deep_translator import GoogleTranslator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django import template
-from django.template import loader ,Context
-#存檔案
+from django.template import loader, Context
+# 存檔案
 from io import BytesIO
 import base64
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 from .models import *
-#給隨機seed
-import random , os 
+# 給隨機seed
+import random
+import os
 import replicate
-
-
+# google translate
+# from google_trans_new import google_translator
 # 類別資料庫及關鍵字資料庫導入
 categories = Category.objects.all()
 promptBase = PromptBase.objects.all().values()
 SIZE = [size for size in range(128, 1025, 128)]
 
 
-
-
-
+# - 取得ID跟頁碼(e.g. 3
+def ChangeLocation(request):
+    # - 取得ID跟頁碼(e.g. 3
+    bookID = Book.objects.get(id=int(request.POST.get('id')))
+    page = Image.objects.filter(
+        book=bookID, page_number=request.POST.get('page'))
+    page.update(img_location=request.POST.get('location'))
+    return JsonResponse({'status': True})
 ###########
 # 創作頁面##
 # ###########
+
+
 @login_required(login_url='login')
 @csrf_exempt
 def makerspace(request, *args, **kwargs):
@@ -66,20 +74,6 @@ def makerspace(request, *args, **kwargs):
 
     return render(request, 'gallery/makerspace.html', context)
 
-
-
-
-# - 取得ID跟頁碼(e.g. 3
-def ChangeLocation(request):
-    # - 取得ID跟頁碼(e.g. 3
-    bookID = Book.objects.get(id=int(request.POST.get('id')))
-    page = Image.objects.filter(
-        book=bookID, page_number=request.POST.get('page'))
-    page.update(img_location=request.POST.get('location'))
-    return JsonResponse({'status': True})
-
-
-
 ###################
 # 顯示頁面
 # ##################
@@ -87,16 +81,19 @@ def ChangeLocation(request):
 
 @csrf_exempt
 def showpage(request):
-    
-    bookID = Book.objects.get(id=int(request.POST.get('id')))    #原頁面資訊儲存
-    oldpage =  Image.objects.filter(book=bookID,page_number=request.POST.get('old_page_num'))
-    oldpage.update(description=request.POST.get('old_page_text'),img_location=request.POST.get('old_page_cover'))
-    #新頁面資訊顯示
-    pages = Image.objects.get(book=bookID,page_number=request.POST.get('page'))
+
+    bookID = Book.objects.get(id=int(request.POST.get('id')))  # 原頁面資訊儲存
+    oldpage = Image.objects.filter(
+        book=bookID, page_number=request.POST.get('old_page_num'))
+    oldpage.update(description=request.POST.get('old_page_text'),
+                   img_location=request.POST.get('old_page_cover'))
+    # 新頁面資訊顯示
+    pages = Image.objects.get(
+        book=bookID, page_number=request.POST.get('page'))
     setblock1 = loader.get_template('makerspace/main.html')
-    c ={
-        'book':bookID,
-        'pages':pages,
+    c = {
+        'book': bookID,
+        'pages': pages,
         'promptBase': promptBase,
         'categories': categories,
         'height': SIZE,
@@ -107,50 +104,56 @@ def showpage(request):
 ###################
 # 移除功能
 # ##################
+
+
 @csrf_exempt
 def remove(request):
-    #- 取得ID跟頁碼(e.g. 3
+    # - 取得ID跟頁碼(e.g. 3
     bookID = Book.objects.get(id=int(request.POST.get('id')))
     count = len(Image.objects.filter(book=bookID))
-    if count>1:
+    if count > 1:
         #- 將該頁面進行移除
-        Image.objects.filter(book=bookID,page_number=request.POST.get('page')).delete() 
-        pages = Image.objects.filter(book=bookID).order_by('page_number') #重新整理頁面
+        Image.objects.filter(
+            book=bookID, page_number=request.POST.get('page')).delete()
+        pages = Image.objects.filter(
+            book=bookID).order_by('page_number')  # 重新整理頁面
         #- 接著後面頁面的頁碼-1
-        for page,item in enumerate(pages):
-            item.page_number=page
+        for page, item in enumerate(pages):
+            item.page_number = page
             item.save()
     # item.update(page_number=int(page))
-    pages = Image.objects.filter(book=bookID).order_by('page_number') #重新整理頁面
+    pages = Image.objects.filter(book=bookID).order_by('page_number')  # 重新整理頁面
     templates = loader.get_template('makerspace/loadpages.html')
-    context= {'pages':pages,'book':bookID}
-    return HttpResponse(templates.render(context))       
+    context = {'pages': pages, 'book': bookID}
+    return HttpResponse(templates.render(context))
 
 ###################
 # 插入功能
 # ##################
+
+
 @csrf_exempt
 def insert(request):
     bookID = Book.objects.get(id=int(request.POST.get('id')))
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     new_page = sum(1 for i in pages)
-    seed = Image.objects.get(book=bookID,page_number=new_page-1).seeds
-    Image.objects.create(page_number=new_page,book=bookID,seeds=seed,steps=70,prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!",img_location="area-top")
+    seed = Image.objects.get(book=bookID, page_number=new_page-1).seeds
+    Image.objects.create(page_number=new_page, book=bookID, seeds=seed,
+                         steps=70, prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!", img_location="area-top")
     pages = Image.objects.filter(book=bookID).order_by('page_number')
-    #重新設定幾個網頁
+    # 重新設定幾個網頁
     templates = loader.get_template('makerspace/loadpages.html')
-    context= {'pages':pages,'book':bookID}
+    context = {'pages': pages, 'book': bookID}
     return HttpResponse(templates.render(context))
 
 
-
-#判斷是否為ajax
 def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 #######
-#新版本
+# 新版本
 #######
 # @login_required(login_url='login')
 @csrf_exempt
@@ -162,9 +165,7 @@ def generate(request):
     pages = Image.objects.filter(book=bookID,page_number=request.POST['page'])
     if  is_ajax(request=request) and request.method == "POST":
         #只要生成圖像參數表單即可
-        prompt = GoogleTranslator(source='auto', target='en').translate(request.POST['prompt'])
-#加上style
-
+        prompt = GoogleTranslator(source='auto', target='en').translate(request.POST['prompt'])#加上style
         scale = float(request.POST['scale'])
         seed = int(request.POST['seed'])
         steps = int(request.POST['steps'])
@@ -177,7 +178,7 @@ def generate(request):
     """
 
     #Set the REPLICATE_API_TOKEN environment variable
-    os.environ["REPLICATE_API_TOKEN"] = "f78063dc0ca977e27a74f1059352d9c527f4b0b8"
+    os.environ["REPLICATE_API_TOKEN"] = "8eb488ca6a9389d344fa91a993d5155d6451ce4e"
 
     model = replicate.models.get("stability-ai/stable-diffusion")
     version = model.versions.get("db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf")
@@ -203,11 +204,11 @@ def generate(request):
     return JsonResponse({'image_str': image_str})
 
 
-
 ###################
 # 風格選擇頁面
 # ##################
 # 建立繪本ID-取得會員資料等
+
 def style_choose(request, *args, **kwargs):
     # 取得繪本ID
     book = kwargs['book_id']
@@ -221,6 +222,8 @@ def style_choose(request, *args, **kwargs):
     return render(request, 'stylebase/style_choose.html', context)
 
 # 建立繪本ID-取得會員資料等
+
+
 @csrf_exempt
 def book_create(request, *args, **kwargs):
     print(request.COOKIES.get("uid"))

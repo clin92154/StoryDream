@@ -1,17 +1,44 @@
-.title_inform {
-    background-color: #58a5d4;
-}
-
-
-.text1 {
-  text-align: center;
-  line-height: 200px;/*與包著的區塊設定同高度即可*/
-}
-
-.circle {
-    background-color: #87def7;
-    width: 200px;
-    height: 250px;
-    border-radius: 20%;
-  }
-
+        .title_inform {
+            background-color: #58a5d4;
+        }
+        
+        .text1 {
+            text-align: center;
+            line-height: 200px;
+            /*與包著的區塊設定同高度即可*/
+        }
+        
+        .circle {
+            background-color: #87def7;
+            width: 200px;
+            height: 250px;
+            border-radius: 20%;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mb-row {
+            height: 80vh;
+            width: 100%;
+        }
+        
+        .user_card {
+            width: 450px;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: #FFF;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 30px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 5px;
+        }
