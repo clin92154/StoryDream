@@ -13,9 +13,7 @@
               <img src="https://fakeimg.pl/500x250/?text=none&font=lobster" class="mx-auto d-block img-fluid" alt="..." style="border-radius: 10px"/>
             {% endif %}
               <div class="mb-3 mt-10">
-              <label for="exampleFormControlInput1" class="form-label"
-                >故事類別：</label
-              >
+              <label class="form-label">類別：</label>
               <select class="form-select" aria-label="Default select example">
                 <option selected disabled>請選擇類別</option>
                 <option value="1">類別1</option>
@@ -25,7 +23,19 @@
               <div class="invalid-feedback">請選擇類別</div>
             </div>
             <p>頁數：{{pages}}頁</p>
-            <p>狀態：公開</p>
+            <label class="form-label">狀態：</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="open" checked>
+              <label class="form-check-label" for="open">
+                公開
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="private">
+              <label class="form-check-label" for="private">
+                私密
+              </label>
+            </div>
           </div>
           <!--狀態列-->
           <!--故事設定列-->
