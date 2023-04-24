@@ -48,7 +48,7 @@
   <div class="row mt-10">
     <div class="col-12">
       <div class="row row-cols-1 row-cols-md-4 g-4">
-        {% for book in books %}
+        {% for book in books %} {% if book.public_status %}
         <div class="col">
           <a id="card-a" href="{% url 'storyview' book.id %}">
             <div id="card-style" class="card h-100">
@@ -63,17 +63,14 @@
                     <h5 class="card-title">{{book.title}}</h5>
                     <h6>{{book.author}}</h6>
                   </div>
-                  <div class="col-6">
-                    <i class="fa-solid fa-heart fa-love">123</i>
-                  </div>
                 </div>
               </div>
             </div>
           </a>
         </div>
-        {% endfor %}
+        {%endif%} {% endfor %}
       </div>
     </div>
   </div>
 </div>
- {% endblock%}
+{% endblock%}

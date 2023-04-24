@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # path(, views.makerspace, name='book_id'),#第二個參數需設定views.py中的檢視函式(View Function)名稱(index)
-    path('<int:book_id>/', views.makerspace),#第二個參數需設定views.py中的檢視函式(View Function)名稱(index)
+    path('<int:book_id>/', views.makerspace , name="md"),#第二個參數需設定views.py中的檢視函式(View Function)名稱(index)
     path('', views.makerspace, name = "MakerSpace"),#第二個參數需設定views.py中的檢視函式(View Function)名稱(index)
     path('generate/', views.generate),
     path('insert/',views.insert),

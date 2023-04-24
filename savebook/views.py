@@ -7,9 +7,13 @@ from MakerSpace.models import *
 @csrf_exempt
 def save(request , *args, **kwargs):
     if request.method == "POST":
+        if request.POST['public_status'] == 'private':
+            status = False
+        else:
+            status = True
         book_id = int(kwargs['book_id'])
         book = Book.objects.filter(id = book_id)
-        book.update(title=request.POST['book_title'],description=request.POST['description'] )
+        book.update(title=request.POST['book_title'],description=request.POST['description'],public_status=status)
         #,cover_page =request.POST['cover_page']
         ID = Book.objects.get(id = book_id).author
 
