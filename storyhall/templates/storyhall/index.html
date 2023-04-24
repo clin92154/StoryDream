@@ -52,11 +52,21 @@
         <div class="col">
           <a id="card-a" href="{% url 'storyview' book.id %}">
             <div id="card-style" class="card h-100">
-              <img
+
+
+            {% if book.getCover != none %}
+            <img
                 src="data:image/png;base64,{{book.getCover}}"
                 class="card-img-top"
                 alt=""
               />
+            {% else %}
+            <img
+              src="https://fakeimg.pl/768x768/?text=none&font=lobster"
+              class="mx-auto d-block img-fluid"
+              alt="..."
+            />
+            {% endif %}
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
@@ -74,3 +84,4 @@
   </div>
 </div>
 {% endblock%}
+
