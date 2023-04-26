@@ -200,7 +200,7 @@ def generate(request):
     buffer = BytesIO(response.content)
     #取得目前繪本id資料夾，若沒有則建立並依據編號存到該路徑中
     image_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-    pages.update(prompt=prompt,image=image_str, height=768, width=768,seeds=seed,steps=steps, scale= scale)
+    pages.update(prompt=request.POST['prompt'],image=image_str, height=768, width=768,seeds=seed,steps=steps, scale= scale)
     return JsonResponse({'image_str': image_str})
 
 

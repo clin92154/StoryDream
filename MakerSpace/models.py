@@ -36,8 +36,7 @@ class Category(models.Model):
 
 ## 關鍵字資料庫
 class PromptBase(models.Model):
-    category = models.ForeignKey(Category,on_delete=models.CASCADE
-                                 ,related_name='promptbase')
+    category = models.ForeignKey(Category,on_delete=models.CASCADE ,related_name='promptbase')
     keyword = models.CharField(max_length=200, db_index=True)
     class Meta:
         ordering = ('category','keyword')
