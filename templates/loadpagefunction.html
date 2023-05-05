@@ -61,10 +61,15 @@
 <!--顯示所選頁面資訊-->
 <script>
   function showpage(num) {
-    let old_page_num = $("#page").val();
-    let old_page_text = $("#text-area").val();
-    let old_page_cover = $("#page-cover").attr("class");
     $(document).ready(function () {
+      console.log($("#page").val());
+      console.log($("#text-area").val());
+      console.log($("#page-cover").attr("class"));
+
+      let old_page_num = $("#page").val();
+      let old_page_text = $("#text-area").val();
+      let old_page_cover = $("#page-cover").attr("class");
+
       $.ajaxSetup({
         data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
       });
@@ -82,6 +87,7 @@
         //若成功-> localStroge
         success: function (response) {
           $("#main").html(response);
+          updatePrompt();
         },
       });
     });

@@ -1,58 +1,71 @@
 {% extends 'base.html' %}{% block content%}
+{% load static %}
+<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-warning position-relative">
+	<div class="container text-white h-100 tofront">
+      <div class="d-lg-flex align-items-center justify-content-between text-center pl-lg-5">
+        <div class="col pt-4 pb-4">
+            <h1 style="color: #343a3e; font-weight: 600" class="display-3">StoryDream</h1>
+            <h4 style="color: #343a3e; font-weight: 400; margin-bottom:2rem;" >
+             解開創作故事的夢境!
+            </h4>
+            <button type="button" class="btn btn-lg btn-outline-white btn-round"  onclick="create()">
+              <h3  style="color: #343a3e; font-weight: 600"> 開始創作! </h3>
+            </button>
+        </div>
+        <div class="col align-self-bottom align-items-right text-right h-max-380 h-xl-560 position-relative z-index-1">
+            <img src="{% static 'image/banner_img.png' %}" class="rounded img-fluid">
+        </div>
+		</div>
+	</div>
+</div>
+<svg style="-webkit-transform:rotate(-180deg); -moz-transform:rotate(-180deg); -o-transform:rotate(-180deg); transform:rotate(-180deg); margin-top: -1px;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" xml:space="preserve">
+  <path class="bg-warning" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"></path>
+</svg>
+<!-- End Header -->
 
-<div class="container mt-10 mb-10 white-block">
+<div class="container mt-10" style="margin-bottom:30px;">
   <div class="row">
     <div class="col-12">
-      <div class="dropdown">
-        <button
-          class="btn btn-primary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           所有類型
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">類型1</a></li>
-          <li><a class="dropdown-item" href="#">類型2</a></li>
-          <li><a class="dropdown-item" href="#">類型3</a></li>
-        </ul>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">科幻</a>
+          <a class="dropdown-item" href="#">童話</a>
+          <a class="dropdown-item" href="#">所有類型</a>
+          <a class="dropdown-item" href="#">冒險</a>
+          <a class="dropdown-item" href="#">青少年文學</a>
+          <a class="dropdown-item" href="#">日記</a>
+        </div>
+      </div>
 
-        <button
-          class="btn btn-primary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton2"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          熱門
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          最新上傳        
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-          <li><a class="dropdown-item" href="#">熱門1</a></li>
-          <li><a class="dropdown-item" href="#">熱門2</a></li>
-          <li><a class="dropdown-item" href="#">熱門3</a></li>
-        </ul>
-
-        <button
-          type="button"
-          class="btn btn-primary"
-          style="float: right"
-          onclick="create()"
-        >
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">最新上傳</a>
+          <a class="dropdown-item" href="#">熱門</a>
+          <a class="dropdown-item" href="#">瀏覽次數最多</a>
+        </div>
+      </div>
+        <button type="button" class="btn btn-primary d-none d-sm-block" style="float: right" onclick="create()" >
           建立繪本
         </button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="container mt-10" style="margin-bottom:30px;">
   <div class="row mt-10">
     <div class="col-12">
       <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for book in books %} {% if book.public_status %}
-        <div class="col">
+        <div class="col-lg-3 col-sm-1 col-xs-1">
           <a id="card-a" href="{% url 'storyview' book.id %}">
             <div id="card-style" class="card h-100">
-
 
             {% if book.getCover != none %}
             <img
@@ -68,8 +81,6 @@
             />
             {% endif %}
 
-
-              
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">

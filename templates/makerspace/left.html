@@ -1,28 +1,24 @@
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           進階功能
         </button>
       </h2>
-     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-  
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="accordion-body">
           <div class="container">
-    
               {% load static %}
-    
               <div class="row mt-10">
                   <label class="col-md-3">擺放</br>位置</label>
                   <div class="col-md-9">
-                    <button
-                      id="area-top"
+                    <button id="area-top"
                       {% if  pages.img_location == 'area-top'%}
-                        class="btn btn-outline-secondary btn-up active"
+                        class="btn btn-outline-success shadow-sm btn-up active"
                       {% else %}
-                        class="btn btn-outline-secondary btn-up"
+                        class="btn btn-outline-success shadow-sm btn-up"
                       {% endif %}
-                      class="btn btn-outline-secondary btn-up active"
+                      class="btn btn-outline-success shadow-sm btn-up active"
                       type="button"
                       onclick="Changelocation(0)"
                     >
@@ -34,9 +30,9 @@
                     <button
                       id="area-bottom"
                       {% if  pages.img_location == 'area-bottom'%}
-                      class="btn btn-outline-secondary btn-down active"
+                      class="btn btn-outline-success shadow-sm btn-down active"
                       {% else %}
-                        class="btn btn-outline-secondary btn-down"
+                        class="btn btn-outline-success shadow-sm btn-down"
                       {% endif %}                
                       type="button"
                       onclick="Changelocation(1)"
@@ -49,13 +45,14 @@
                     <button
                       id="area-left"
                       {% if  pages.img_location == 'area-left'%}
-                      class="btn btn-outline-secondary btn-left active"
+                      class="btn btn-outline-success shadow-sm btn-left active"
                       {% else %}
-                        class="btn btn-outline-secondary btn-left"
+                        class="btn btn-outline-success shadow-sm btn-left"
                       {% endif %}  
-                      class="btn btn-outline-secondary btn-left"
+                      class="btn btn-outline-success shadow-sm btn-left"
                       type="button"
                       onclick="Changelocation(2)"
+                      style="margin-top:2%;"
                     >
                       <img
                         src="{% static 'image/image-left.png' %}"
@@ -65,12 +62,13 @@
                     <button
                       id="area-right"
                       {% if  pages.img_location == 'area-right'%}
-                      class="btn btn-outline-secondary btn-right active"
+                      class="btn btn-outline-success shadow-sm btn-right active"
                       {% else %}
-                        class="btn btn-outline-secondary btn-right"
+                        class="btn btn-outline-success shadow-sm btn-right"
                       {% endif %}  
                       type="button"
                       onclick="Changelocation(3)"
+                      style="margin-top:2%;"
                     >
                       <img
                         src="{% static 'image/image-right.png' %}"
@@ -138,13 +136,13 @@
   
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           關鍵字資料庫
         </button>
       </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
           <div class="accordion-body">
-            <div class="container" >
+            
               <div class="row" >
                 <div class="col-md-12">
                   <div id="promptbase" class="btn-box pre-scrollable" style="overflow-x: hidden;overflow-y: auto;display: flex;flex-wrap: wrap;padding: 0.5rem;">
@@ -157,22 +155,23 @@
                 </div>
               </div>
               <!-- row -->
-            </div>
-            <!-- container -->
+            
           </div>
         </div>
       </div>
     </div>
-    
-      <div class="col-md-12 mt-10">
-        <textarea id="promptArea" name="prompt" class="form-control" style="resize: none;"onkeyup="updatePrompt()">{{pages.prompt}}</textarea>
-      </div>
-  
-      <div class="d-grid gap-2 d-md-block text-center mt-10 mb-10">
-        <button class="btn btn-success" type="submit">產生圖片</button>
-      </div>
-  
-    </div>  
+</div>
+
+
+  <div class="row">
+    <div class="col-md-12 mt-10">
+      <textarea id="promptArea" name="prompt" class="form-control" style="resize: none;" onkeyup="updatePrompt()" placeholder="可自行輸入圖片的關鍵字或透過上方類別選擇!" value="{{pages.prompt}}">{{pages.prompt}}</textarea>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2 d-md-block text-center mt-10 mb-10">
+    <button class="btn btn-success btn-round btn-block shadow-sm" type="submit">產生圖片</button>
+  </div>
   
   <script>
     function Changelocation(num) {

@@ -58,8 +58,9 @@ def makerspace(request, *args, **kwargs):
             steps = styleID.steps
             Image.objects.create(page_number=0, book=bookID, seeds=random.randint(
                 1, 4294967295), steps=steps, img_location="area-left")
+        print(1)
         return redirect(f'{bookID.id}/')
-
+    print(0)
     bookID = Book.objects.get(id=int(kwargs['book_id']))
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     context = {
@@ -71,7 +72,7 @@ def makerspace(request, *args, **kwargs):
         'width': SIZE,
     }
     # 若無圖片先以第一頁為預設
-
+    print(2)
     return render(request, 'gallery/makerspace.html', context)
 
 ###################
@@ -139,7 +140,7 @@ def insert(request):
     new_page = sum(1 for i in pages)
     seed = Image.objects.get(book=bookID, page_number=new_page-1).seeds
     Image.objects.create(page_number=new_page, book=bookID, seeds=seed,
-                         steps=70, prompt="可自行輸入圖片的關鍵字或透過上方類別選擇!", img_location="area-top")
+                         steps=70, img_location="area-top",description="")
     pages = Image.objects.filter(book=bookID).order_by('page_number')
     # 重新設定幾個網頁
     templates = loader.get_template('makerspace/loadpages.html')
@@ -148,7 +149,6 @@ def insert(request):
 
 
 def is_ajax(request):
-    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
@@ -230,7 +230,7 @@ def book_create(request, *args, **kwargs):
     print(request.COOKIES.get('is_login'))
     if request.COOKIES.get('is_login'):
         userid = Userinfo.objects.get(UserID=request.COOKIES.get("uid"))
-        book = Book.objects.create(author=userid, userinfo=userid)
+        book = Book.objects.create(author=userid, userinfo=userid,title='',description='')
         # 將繪本ID傳送至頁面
         return HttpResponse(f'makerspace/style_choose/{book.id}/')
     return HttpResponse('account/login')

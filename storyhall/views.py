@@ -12,7 +12,6 @@ from django.template import loader ,Context
 # 顯示頁面 #
 ###########
 @csrf_exempt
-@login_required(login_url='login')
 def showpage(request):
     bookID = Book.objects.get(id=int(request.POST.get('id'))) 
     #新頁面資訊顯示
@@ -27,7 +26,6 @@ def showpage(request):
 ###########
 # 顯示繪本 #
 ###########
-@login_required(login_url='login')
 def showStory(request , *args, **kwargs):
     #取得已經公開繪本的ID
     book_id = int(kwargs['book_id'])
@@ -44,8 +42,8 @@ def showStory(request , *args, **kwargs):
 ########
 def index(request):
     #取得已經公開繪本的ID、作者資訊
-    print(request.COOKIES.get("uid"))
-    print(request.COOKIES.get('is_login'))
+    # print(request.COOKIES.get("uid"))
+    # print(request.COOKIES.get('is_login'))
     book = Book.objects.all()
     # book_cover =  Image.objects.all()
     content = {
