@@ -65,11 +65,11 @@
   //初始化設定
   let init_page_location = document.getElementById("page-cover");
   let init_coverpage = document.getElementById("page-image");
-  let init_coverpage_content = document.getElementById("text-area");
+  let init_coverpage_content = document.getElementById("ta-readonly");
   init_page_location.className = "{{pages.first.img_location}}";
   init_coverpage.style =
     "background-image: url('data:image/png;base64,{{pages.first.image}}')";
-  init_coverpage_content.text = "{{pages.first.description}}";
+  init_coverpage_content.value = "{{pages.first.description}}";
   //顯示所選頁面資訊
 
   function showpage(num) {
@@ -88,8 +88,6 @@
         //若成功-> localStroge
         success: function (response) {
           $("#page-cover").replaceWith(response);
-          let page_text = document.getElementById("text-area");
-          {% comment %} page_text.id = "page_text"; {% endcomment %}
         },
       });
     });
