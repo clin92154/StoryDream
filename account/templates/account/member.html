@@ -1,14 +1,18 @@
 {%extends 'base.html'%} {%block content%}
-<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-warning position-relative">
-	<div class="container text-white h-100 tofront">
-		<div class="row align-items-center justify-content-center text-center">
-			<div class="col-md-10">
-				<h1 class="display-3">會員中心</h1>
-			</div>
-		</div>
-	</div>
+<div
+  class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-warning position-relative"
+>
+  <div class="container text-white h-100 tofront">
+    <div class="row align-items-center justify-content-center text-center">
+      <div class="col-md-10">
+        <h1 class="display-3" style="color: #343a3e; font-weight: 600">
+          會員中心
+        </h1>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="container mt-10 mb-10" style="margin-top:5%;">
+<div class="container mt-10 mb-10" style="margin-top: 5%">
   <div class="row">
     <!--作者資訊-->
     <div class="col-lg-3 col-md-12 ml-10">
@@ -32,42 +36,47 @@
         <div class="row">
           <div class="col-12 mb-10">
             <lable class="fz-24">你的繪本</lable>
-            <button type="button" class="btn btn-primary" style="float: right" onclick="create()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              style="float: right"
+              onclick="create()"
+            >
               建立繪本
             </button>
           </div>
 
-              {% for book in UserID.book_set.all %}
-              <div class="col-lg-4 col-md-1 mb-10">
-                <a id="card-a" href="{% url 'md' book.id %}">
-                  <div id="card-style" class="card">
-                    {% if book.getCover != none %}
-                    <img
-                      src="data:image/png;base64,{{book.getCover}}"
-                      class="card-img-top"
-                      alt=""
-                    />
-                    {% else %}
-                    <img
-                      src="https://fakeimg.pl/768x768/?text=none&font=lobster"
-                      class="card-img-top"
-                      alt="..."
-                    />
-                    {% endif %}
-                    
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-6">
-                          <h6 class="card-title">{{book.title}}</h6>
-                        </div>
-                      </div>
+          {% for book in UserID.book_set.all %}
+          <div class="col-lg-4 col-md-1 mb-10">
+            <a id="card-a" href="{% url 'md' book.id %}">
+              <div id="card-style" class="card">
+                {% if book.getCover != none %}
+                <img
+                  src="data:image/png;base64,{{book.getCover}}"
+                  class="card-img-top"
+                  alt=""
+                />
+                {% else %}
+                <img
+                  src="https://fakeimg.pl/768x768/?text=none&font=lobster"
+                  class="card-img-top"
+                  alt="..."
+                />
+                {% endif %}
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 class="card-title">{{book.title}}</h6>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
-              {% endfor %}
-            </div>
-       
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
         {% elif UserID.book_set.count == 0 %}
         <div class="container">
           <div class="row text-center">
