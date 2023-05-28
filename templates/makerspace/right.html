@@ -13,6 +13,6 @@
   ></div>
 
   <div id="page-text">
-    <textarea id="text-area" placeholder="寫下你的故事吧!">{{pages.description}}</textarea>
+    <textarea id="text-area" placeholder="寫下你的故事吧!" >{%if pages.description != 'None' %}{{pages.description}}{%endif%}</textarea>
   </div>
 </div>

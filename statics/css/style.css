@@ -1,234 +1,201 @@
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
-    * {
-        font-family: 'Noto Sans TC';
-    }
-    
-    .white-block {
-        padding: 20px;
-        border-radius: 10px;
-        background-color: #FFB300 !important;
-    }
-    
-    .mt-10 {
-        margin-top: 10px;
-    }
-    
-    .mt-30 {
-        margin-top: 30px;
-    }
-    
-    .mb-10 {
-        margin-bottom: 10px;
-    }
-    
-    .ml-10 {
-        margin-left: 10px;
-    }
-    
-    .ml-30 {
-        margin-left: 40px;
-    }
-    
-    .w-300h-500 {
-        width: 300px;
-        height: 500px;
-    }
-    
-    .right {
-        float: right;
-    }
-    
-    .btn-box {
-        overflow: hidden;
-    }
-    
-    .btn-box>button {
-        margin: 1%;
-        border-radius: 20px;
-        width: 100px;
-        padding: 6px 12px;
-    }
-    
-    .box {
-        padding: 0;
-        width: 999px;
-        height: 100px;
-        margin: auto;
-        overflow: hidden;
-    }
-    
-    .btn-image_where {
-        margin-top: 3px;
-        margin-right: 5px;
-    }
-    
-    .list {
-        margin: 0;
-    }
-    
-    .of-y {
-        overflow-y: hidden;
-    }
-    
-    .ul-of {
-        white-space: nowrap;
-        overflow: visible;
-        width: 100px;
-    }
-    
-    .photo:hover {
-        transform: scale(1.1, 1.1);
-        -webkit-transform: scale(1.1, 1.1);
-        -moz-transform: scale(1.1, 1.1);
-        -ms-transform: scale(1.1, 1.1);
-        -o-transform: scale(1.1, 1.1);
-    }
-    
-    .fz-24 {
-        font-size: 24px;
-    }
-    
-    .photo,
-    .photo>img {
-        background-color: rgb(238, 235, 235);
-        width: 150px;
-        height: 100px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        font-size: 3.5rem;
-        display: inline-block;
-    }
-    
-    .fa-love {
-        font-size: 1.25em;
-        line-height: 0em;
-        vertical-align: -0.075em;
-        color: #ff8a80;
-        float: right;
-    }
-    
-    .pic-place {
-        background-position: right bottom;
-    }
-    /* #page-text>#text-area:hover {
-border: 2px dashed rgb(0, 0, 0);
-background-color: grey;
-color: white;
-opacity: 40%;
-content: '設計一個有趣的旁白';
-font-size: .8em;
-} */
-    
-    .btn-style-choose {
-        border: none;
-        padding: 0px !important;
-    }
-    
-    .photo {
-        display: inline-block;
-        position: relative;
-    }
-    
-    .image-remove {
-        top: -55%;
-        right: -6%;
-        display: block;
-        position: absolute;
-    }
-    
-    .fa-circle-xmark {
-        font-size: .5em!important;
-        line-height: 0em!important;
-    }
-    
-    .photo {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-wrap: nowrap;
-        align-content: stretch;
-    }
-    
-    .page-num {
-        flex-direction: column;
-        display: flex;
-        font-size: 18px;
-    }
-    
-    @media (min-width: 320px) {
-        .login {
-            margin-top: 10%;
-            margin-left: 0.5%;
-        }
-        .register {
-            margin-top: 30%;
-            margin-left: 0.5%;
-            margin-bottom: 35%;
-        }
-        .storyview {
-            margin-top: 30%;
-        }
-        .markerspaceMain {
-            margin-top: 30%;
-        }
-        .markerspaceImg {
-            margin-top: 3%;
-        }
-        .markerspaceBtn {
-            margin-top: 3%;
-        }
-        .markerspaceLoadpages {
-            padding-right: 15px;
-            padding-left: 15px;
-            padding-bottom: 3%;
-        }
-    }
-    
-    @media (min-width: 768px) {
-        .register {
-            margin-top: 13%;
-            margin-left: none;
-            margin-bottom: 15%;
-        }
-        .storyview {
-            margin-top: 13%;
-        }
-        .markerspaceMain {
-            margin-top: 13%;
-        }
-        .markerspaceImg {
-            margin-top: 3%;
-        }
-        .markerspaceBtn {
-            margin-top: 3%;
-        }
-    }
-    
-    @media (min-width: 992px) {
-        .markerspaceMain {
-            margin-top: 10%;
-        }
-    }
-    
-    @media (min-width: 1200px) {
-        .login {
-            margin-top: 5%;
-            margin-left: none;
-        }
-        .register {
-            margin-top: 6%;
-            margin-left: none;
-            margin-bottom: 5%;
-        }
-        .markerspaceMain {
-            margin-top: 8%;
-        }
-        .markerspaceBtn {
-            height: 170px;
-        }
-        .markerspaceLoadpages {
-            padding-right: 0px;
-            padding-left: 0px;
-            padding-bottom: 3%;
-        }
-    }
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap");
+* {
+  font-family: "Noto Sans TC";
+}
+
+.white-block {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #efefefb7 !important;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.ml-30 {
+  margin-left: 40px;
+}
+
+.w-300h-500 {
+  width: 300px;
+  height: 500px;
+}
+
+.right {
+  float: right;
+}
+
+.btn-box {
+  overflow: hidden;
+}
+
+.btn-box > button {
+  margin: 1%;
+  border-radius: 20px;
+  width: 100px;
+  padding: 6px 12px;
+}
+
+.box {
+  padding: 0;
+  width: 999px;
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.btn-image_where {
+  margin-top: 3px;
+  margin-right: 5px;
+}
+
+.list {
+  margin: 0;
+}
+
+.of-y {
+  overflow-y: hidden;
+}
+
+.ul-of {
+  white-space: nowrap;
+  overflow: visible;
+  width: 100px;
+}
+.photo:hover {
+  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
+  -ms-transform: scale(1.1, 1.1);
+  -o-transform: scale(1.1, 1.1);
+}
+.fz-24 {
+  font-size: 24px;
+}
+
+.fa-love {
+  font-size: 1.25em;
+  line-height: 0em;
+  vertical-align: -0.075em;
+  color: #ff8a80;
+  float: right;
+}
+
+.pic-place {
+  background-position: right bottom;
+}
+
+.btn-style-choose {
+  border: none;
+  padding: 0px !important;
+}
+
+.image-remove {
+  top: -55%;
+  right: -6%;
+  display: block;
+  position: absolute;
+  color: rgba(179, 11, 11, 0.913);
+}
+
+.fa-circle-xmark {
+  font-size: 0.5em !important;
+  line-height: 0em !important;
+}
+
+.page-num {
+  flex-direction: column;
+  display: flex;
+  font-size: 18px;
+}
+
+@media (min-width: 320px) {
+  .login {
+    margin-top: 10%;
+    margin-left: 0.5%;
+  }
+  .register {
+    margin-top: 30%;
+    margin-left: 0.5%;
+    margin-bottom: 35%;
+  }
+  .storyview {
+    margin-top: 30%;
+  }
+  .markerspaceMain {
+    margin-top: 30%;
+  }
+  .markerspaceImg {
+    margin-top: 3%;
+  }
+  .markerspaceBtn {
+    margin-top: 3%;
+  }
+  .markerspaceLoadpages {
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 3%;
+  }
+}
+
+@media (min-width: 768px) {
+  .register {
+    margin-top: 13%;
+    margin-left: none;
+    margin-bottom: 15%;
+  }
+  .storyview {
+    margin-top: 13%;
+  }
+  .markerspaceMain {
+    margin-top: 13%;
+  }
+  .markerspaceImg {
+    margin-top: 3%;
+  }
+  .markerspaceBtn {
+    margin-top: 3%;
+  }
+}
+
+@media (min-width: 992px) {
+  .markerspaceMain {
+    margin-top: 10%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .login {
+    margin-top: 5%;
+    margin-left: none;
+  }
+  .register {
+    margin-top: 6%;
+    margin-left: none;
+    margin-bottom: 5%;
+  }
+  .markerspaceMain {
+    margin-top: 8%;
+  }
+  .markerspaceBtn {
+    height: 170px;
+  }
+  .markerspaceLoadpages {
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 3%;
+  }
+}

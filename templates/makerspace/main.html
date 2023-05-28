@@ -1,17 +1,30 @@
 <div class="container markerspaceMain">
-  <div class="row">
-    <div class="col-lg-4 col-sm-12" style="padding: 20px; border-radius: 10px; border: 1px solid #333333;">
-      <form id="generate" method="POST" class="form-group needs-validation" novalidate>
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-sm-11 shadow-lg rounded-1" style="padding: 20px">
+      <form
+        id="generate"
+        method="POST"
+        class="form-group needs-validation"
+        novalidate
+      >
         {% csrf_token %}
         <input type="hidden" id="bid" name="bid" value="{{book.id}}" />
         {% if pages.page_number == 0 %}
-        <p id="show_page_number"class="text-center fz-24">封面</p>
+        <p id="show_page_number" class="text-center fz-24">封面</p>
         {% else %}
-        <p id="show_page_number" class="text-center fz-24">第 {{pages.page_number}} 頁</p>
+        <p id="show_page_number" class="text-center fz-24">
+          第 {{pages.page_number}} 頁
+        </p>
         {% endif %}
-          
-        <input id="page" type="hidden" name="page" value="{{pages.page_number}}" readonly="readonly" />
-          {% include 'makerspace/left.html'%}
+
+        <input
+          id="page"
+          type="hidden"
+          name="page"
+          value="{{pages.page_number}}"
+          readonly="readonly"
+        />
+        {% include 'makerspace/left.html'%}
       </form>
     </div>
     <div class="col-lg-8 col-sm-12 markerspaceImg">
@@ -19,3 +32,8 @@
     </div>
   </div>
 </div>
+<style>
+  img[src=""],
+  img:not([src]) {
+  }
+</style>

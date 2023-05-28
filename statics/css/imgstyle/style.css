@@ -116,4 +116,18 @@
 .area-right div#page-image {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+.photo {
+  margin: 0rem 1rem;
+  display: inline-block;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  width: 150px;
+  height: 110px;
+  font-size: 3.5rem;
+  border-radius: 15px;
 }/*# sourceMappingURL=style.css.map */

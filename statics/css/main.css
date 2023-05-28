@@ -6810,6 +6810,10 @@ button.bg-orange:focus {
   border-radius: 0 !important;
 }
 
+.rounded-1 {
+  border-radius: 15px !important;
+}
+
 .clearfix::after {
   display: block;
   clear: both;
